@@ -1,5 +1,6 @@
 import CardItem from 'components/CardItem';
 import Layout from 'components/Layout';
+import Search from 'components/Search';
 import { ThemeProvider } from 'styled-components';
 // import Head from 'next/head'
 // import styles from '../styles/Home.module.css'
@@ -19,6 +20,9 @@ export default function Home() {
         <body>
           <Layout>
             <main className="main">
+              <section className="search">
+                <Search />
+              </section>
               <section className="cards">
                 <CardItem />
                 <CardItem />

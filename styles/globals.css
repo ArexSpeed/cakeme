@@ -33,3 +33,12 @@ a {
   justify-content: center;
   align-items: center;
 }
+.search {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
