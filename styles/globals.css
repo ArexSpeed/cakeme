@@ -16,3 +16,20 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 20px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  height: auto;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}

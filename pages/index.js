@@ -1,3 +1,4 @@
+import CardItem from 'components/CardItem';
 import Layout from 'components/Layout';
 import { ThemeProvider } from 'styled-components';
 // import Head from 'next/head'
@@ -6,7 +7,9 @@ import { ThemeProvider } from 'styled-components';
 const theme = {
   primary: '#dc934f',
   white: '#ffffff',
-  bgPrimary: '#e7dcdc'
+  blue: '#182D56',
+  bgPrimary: '#e7dcdc',
+  bgSecondary: '#DDB086'
 };
 
 export default function Home() {
@@ -14,7 +17,17 @@ export default function Home() {
     <>
       <ThemeProvider theme={theme}>
         <body>
-          <Layout>Cake Me</Layout>
+          <Layout>
+            <main className="main">
+              <section className="cards">
+                <CardItem />
+                <CardItem />
+                <CardItem />
+                <CardItem />
+                <CardItem />
+              </section>
+            </main>
+          </Layout>
         </body>
       </ThemeProvider>
     </>

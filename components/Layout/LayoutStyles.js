@@ -31,12 +31,12 @@ export const NavBar = styled.div`
   height: 30px;
   margin: 10px;
   cursor: pointer;
+  z-index: 100;
   & .bar {
     background: #fff;
     height: 4px;
     border-radius: 0.8rem;
     transition: 0.5s ease-in-out;
-    z-index: 100;
     &:nth-child(1) {
       background: ${({ theme }) => theme.primary};
       width: 50%;
@@ -140,7 +140,7 @@ export const SidebarLink = styled(NavLink)`
   margin: 10px 0;
 `;
 
-export const Main = styled.main`
+export const Main = styled.div`
   width: 100vw;
   min-height: 100vh;
 `;
