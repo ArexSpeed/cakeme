@@ -29,6 +29,7 @@ export const SearchBox = styled.div`
     background: transparent;
     width: 100%;
     font-size: 16px;
+    font-family: 'Poppins', sans-serif;
     padding: 5px;
     border: none;
     outline: none;
