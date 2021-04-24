@@ -4,8 +4,9 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  width: 100vw;
+  max-width: 100vw;
   background: #eceae7;
+  overflow-x: hidden;
 }
 
 a {

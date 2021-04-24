@@ -31,7 +31,7 @@ export const NavBar = styled.div`
   height: 30px;
   margin: 10px;
   cursor: pointer;
-  z-index: 100;
+  z-index: 200;
   & .bar {
     background: #fff;
     height: 4px;
@@ -120,6 +120,7 @@ export const Sidebar = styled.div`
   background: ${({ theme }) => theme.bgPrimary};
   transform: translateX(-100%);
   transition: 0.5s ease-in-out;
+  z-index: 100;
   &.open {
     border-radius: 0;
     transform: translateX(0);

@@ -7,6 +7,9 @@ export const SearchContainer = styled.div`
   align-items: center;
   width: 100%;
   margin: 20px auto;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const SearchBox = styled.div`
@@ -39,4 +42,38 @@ export const PriceBox = styled.div`
   align-items: center;
   width: 100%;
   height: 50px;
+  @media screen and (max-width: 768px) {
+    width: 70%;
+    justify-content: center;
+    margin-top: 40px;
+  }
+`;
+
+export const CategoryBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.bgPrimary};
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background: ${({ theme }) => theme.bgSecondary};
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+    transition: 0.3s ease-in-out;
+  }
+  & img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    margin: 2px;
+  }
+  & h5 {
+    color: #333;
+  }
 `;

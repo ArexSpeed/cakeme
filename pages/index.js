@@ -23,6 +23,7 @@ export default function Home() {
               <section className="search">
                 <Search />
               </section>
+              <p className="cards">All Products: </p>
               <section className="cards">
                 <CardItem />
                 <CardItem />
