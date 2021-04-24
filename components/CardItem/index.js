@@ -3,17 +3,18 @@ import { Card, CardImg, CardTitle, CardInfo, CardActions, CardButton } from './C
 import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
 
 const CardItem = ({ item }) => {
+  console.log(item);
   return (
     <Card>
       <CardImg
         src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
         alt="Image"
       />
-      <CardTitle>Choclate Forrest</CardTitle>
+      <CardTitle>{item.name}</CardTitle>
       <CardInfo>
-        <h4>From 30$</h4>
+        <h4>From {item.price}$</h4>
         <h4>
-          <Link href="/">Our Bakery</Link>
+          <Link href="/">{item.bakery}</Link>
         </h4>
       </CardInfo>
       <CardActions>

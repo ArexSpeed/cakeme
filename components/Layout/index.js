@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 // eslint-disable-next-line prettier/prettier
 import { Nav, NavBar, NavLogo, NavLink, NavIcons, Sidebar, SidebarList, SidebarLink, Main } from './LayoutStyles';
-import { Home, Favorite, NotificationsNone, AddBox, PowerSettingsNew } from '@material-ui/icons';
+// eslint-disable-next-line prettier/prettier
+import { Home, Favorite, NotificationsNone, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
 //import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
 const Navigation = ({ sidebar, setSidebar }) => {
@@ -32,8 +33,8 @@ const Navigation = ({ sidebar, setSidebar }) => {
             </Link>
           </NavLink>
           <NavLink>
-            <Link href="/notifications">
-              <NotificationsNone />
+            <Link href="/basket">
+              <LocalMall />
             </Link>
           </NavLink>
           <NavLink>
