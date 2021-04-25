@@ -1,19 +1,18 @@
 import React from 'react';
 import CardItem from 'components/CardItem';
-// eslint-disable-next-line prettier/prettier
-import { ProductContainer, ProductPrice, ProductImg, ProductTop, Info, ActionsContainer, ActionBox } from './ProductStyles';
 import { AddShoppingCart, ChatBubble, Visibility } from '@material-ui/icons';
+//style ProductSite
 
 const ProductSite = () => {
   return (
-    <ProductContainer>
-      <ProductPrice>From 30$</ProductPrice>
-      <ProductTop>
-        <ProductImg
+    <section className="product">
+      <div className="product__price">From 30$</div>
+      <article className="product__top">
+        <img
           src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
-          alt="Image"
+          alt=""
         />
-        <Info>
+        <div className="product__info">
           <h2>Chocolate Cake</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, rerum. Officia ad
@@ -30,27 +29,27 @@ const ProductSite = () => {
             <li>Almonds</li>
             <li>Strawberry</li>
           </ul>
-        </Info>
-      </ProductTop>
-      <div>
-        <ActionsContainer>
-          <ActionBox>
+        </div>
+      </article>
+      <article>
+        <div className="productActions">
+          <button>
             <AddShoppingCart />
             <span>Order this cake</span>
-          </ActionBox>
-          <ActionBox>
+          </button>
+          <button>
             <ChatBubble />
             <span>Send message</span>
-          </ActionBox>
-          <ActionBox>
+          </button>
+          <button>
             <Visibility />
             <span>Our Bakery</span>
-          </ActionBox>
-        </ActionsContainer>
+          </button>
+        </div>
         <p>Other products from Our Bakery</p>
         <CardItem />
-      </div>
-    </ProductContainer>
+      </article>
+    </section>
   );
 };
 

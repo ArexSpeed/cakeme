@@ -1,36 +1,35 @@
 import Link from 'next/link';
-import { Card, CardImg, CardTitle, CardInfo, CardActions, CardButton } from './CardStyles';
 import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
+//style Card
 
 const CardItem = ({ item }) => {
-  console.log(item);
   return (
-    <Card>
-      <CardImg
+    <div className="card">
+      <img
         src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
-        alt="Image"
+        alt=""
       />
-      <CardTitle>{item.name}</CardTitle>
-      <CardInfo>
+      <h3>{item.name}</h3>
+      <div className="card__info">
         <h4>From {item.price}$</h4>
         <h4>
           <Link href="/">{item.bakery}</Link>
         </h4>
-      </CardInfo>
-      <CardActions>
-        <CardButton>
+      </div>
+      <div className="card__actions">
+        <button>
           <Favorite />
-        </CardButton>
-        <CardButton>
-          <Link href="/">
+        </button>
+        <button>
+          <Link href={`/product/${item.id}`}>
             <Visibility />
           </Link>
-        </CardButton>
-        <CardButton>
+        </button>
+        <button>
           <AddShoppingCart />
-        </CardButton>
-      </CardActions>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 };
 

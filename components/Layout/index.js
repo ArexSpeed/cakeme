@@ -1,62 +1,65 @@
 import { useState } from 'react';
 import Link from 'next/link';
-// eslint-disable-next-line prettier/prettier
-import { Nav, NavBar, NavLogo, NavLink, NavIcons, Sidebar, SidebarList, SidebarLink, Main } from './LayoutStyles';
-// eslint-disable-next-line prettier/prettier
-import { Home, Favorite, NotificationsNone, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
-//import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import styled from 'styled-components';
+import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
+//style - Nav
+
+const Container = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+`;
 
 const Navigation = ({ sidebar, setSidebar }) => {
   return (
     <>
-      <Nav>
-        <NavBar onClick={() => setSidebar(!sidebar)}>
+      <nav className="nav">
+        <button className="navburger" onClick={() => setSidebar(!sidebar)}>
           <div className={sidebar ? 'bar open' : 'bar'}></div>
           <div className={sidebar ? 'bar open' : 'bar'}></div>
           <div className={sidebar ? 'bar open' : 'bar'}></div>
-        </NavBar>
-        <NavLogo>CakeMe</NavLogo>
-        <NavIcons>
-          <NavLink>
+        </button>
+        <div className="nav__logo">CakeMe</div>
+        <ul>
+          <li>
             <Link href="/">
               <Home />
             </Link>
-          </NavLink>
-          <NavLink>
+          </li>
+          <li>
             <Link href="/favorite">
               <Favorite />
             </Link>
-          </NavLink>
-          <NavLink>
+          </li>
+          <li>
             <Link href="/add">
               <AddBox />
             </Link>
-          </NavLink>
-          <NavLink>
+          </li>
+          <li>
             <Link href="/basket">
               <LocalMall />
             </Link>
-          </NavLink>
-          <NavLink>
+          </li>
+          <li>
             <Link href="/logout">
               <PowerSettingsNew />
             </Link>
-          </NavLink>
-        </NavIcons>
-      </Nav>
-      <Sidebar className={sidebar ? 'open' : ''}>
-        <SidebarList>
-          <SidebarLink>
+          </li>
+        </ul>
+      </nav>
+      <sidebar className={sidebar ? 'sidebar open' : 'sidebar'}>
+        <ul>
+          <li>
             <Link href="/products">My Products</Link>
-          </SidebarLink>
-          <SidebarLink>
+          </li>
+          <li>
             <Link href="/messages">Messages</Link>
-          </SidebarLink>
-          <SidebarLink>
+          </li>
+          <li>
             <Link href="/orders">Orders</Link>
-          </SidebarLink>
-        </SidebarList>
-      </Sidebar>
+          </li>
+        </ul>
+      </sidebar>
     </>
   );
 };
@@ -64,9 +67,9 @@ const Navigation = ({ sidebar, setSidebar }) => {
 export default function Layout({ children }) {
   const [sidebar, setSidebar] = useState(false);
   return (
-    <Main onClick={() => sidebar && setSidebar(false)}>
+    <Container onClick={() => sidebar && setSidebar(false)}>
       <Navigation sidebar={sidebar} setSidebar={setSidebar} />
       {children}
-    </Main>
+    </Container>
   );
 }

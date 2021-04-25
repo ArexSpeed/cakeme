@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { SearchContainer, SearchBox, PriceBox, CategoryBox } from './SearchStyles';
-import { Column, Row } from 'components/Styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
+//style Search
 
 const PriceSlider = withStyles({
   root: {
@@ -35,13 +34,13 @@ const Search = () => {
     console.log(value, 'value');
   };
   return (
-    <Column>
-      <SearchContainer>
-        <SearchBox>
+    <div className="search">
+      <article className="search__container">
+        <div className="search__box">
           <SearchIcon />
           <input type="text" placeholder="Find by name, category, ingridiens" />
-        </SearchBox>
-        <PriceBox>
+        </div>
+        <div className="priceBox">
           <p style={{ margin: '-5px' }}>Price range</p>
           <PriceSlider
             value={value}
@@ -53,49 +52,49 @@ const Search = () => {
           <p style={{ marginTop: '5px' }}>
             From ${value[0]} - {value[1]}
           </p>
-        </PriceBox>
-      </SearchContainer>
-      <Column justify="flex-start">
+        </div>
+      </article>
+      <article className="category">
         <h3>Categories:</h3>
-        <Row overflow="scroll" justify="flex-start">
-          <CategoryBox>
+        <div className="category__container">
+          <div className="category__box">
             <img
               src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
               alt="cakes"
             />
             <h5>All</h5>
-          </CategoryBox>
-          <CategoryBox>
+          </div>
+          <div className="category__box">
             <img
               src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
               alt="cakes"
             />
             <h5>Cakes</h5>
-          </CategoryBox>
-          <CategoryBox>
+          </div>
+          <div className="category__box">
             <img
               src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
               alt="cakes"
             />
             <h5>Cakes</h5>
-          </CategoryBox>
-          <CategoryBox>
+          </div>
+          <div className="category__box">
             <img
               src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
               alt="cakes"
             />
             <h5>Cakes</h5>
-          </CategoryBox>
-          <CategoryBox>
+          </div>
+          <div className="category__box">
             <img
               src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
               alt="cakes"
             />
             <h5>Cakes</h5>
-          </CategoryBox>
-        </Row>
-      </Column>
-    </Column>
+          </div>
+        </div>
+      </article>
+    </div>
   );
 };
 
