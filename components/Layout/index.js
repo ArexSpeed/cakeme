@@ -47,7 +47,7 @@ const Navigation = ({ sidebar, setSidebar }) => {
           </li>
         </ul>
       </nav>
-      <sidebar className={sidebar ? 'sidebar open' : 'sidebar'}>
+      <div className={sidebar ? 'sidebar open' : 'sidebar'}>
         <ul>
           <li>
             <Link href="/products">My Products</Link>
@@ -59,7 +59,7 @@ const Navigation = ({ sidebar, setSidebar }) => {
             <Link href="/orders">Orders</Link>
           </li>
         </ul>
-      </sidebar>
+      </div>
     </>
   );
 };

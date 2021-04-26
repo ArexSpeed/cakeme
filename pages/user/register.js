@@ -71,9 +71,6 @@ export default function UserNew() {
           </button>
           {error && <div className="form__error">Account not created {error}</div>}
           <p>
-            Forget password? <Link href="/user/forget">Click</Link>
-          </p>
-          <p>
             Have already account? <Link href="/user/login">Login</Link>
           </p>
         </form>
