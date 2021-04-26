@@ -21,17 +21,13 @@ export default function Home({ offers }) {
   return (
     <>
       <Layout>
-        <main className="main">
-          <section className="search">
-            <Search />
-          </section>
-          <p className="cards">All Products: </p>
-          <section className="cards">
-            {data.map((item) => (
-              <CardItem key={item.id} item={item} />
-            ))}
-          </section>
-        </main>
+        <Search />
+        <p className="section">All Products: </p>
+        <section className="section">
+          {data.map((item) => (
+            <CardItem key={item.id} item={item} />
+          ))}
+        </section>
       </Layout>
     </>
   );

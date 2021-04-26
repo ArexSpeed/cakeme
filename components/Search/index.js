@@ -34,7 +34,7 @@ const Search = () => {
     console.log(value, 'value');
   };
   return (
-    <div className="search">
+    <section className="search">
       <article className="search__container">
         <div className="search__box">
           <SearchIcon />
@@ -94,7 +94,7 @@ const Search = () => {
           </div>
         </div>
       </article>
-    </div>
+    </section>
   );
 };
 

@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
 import Layout from 'components/Layout';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+//style Form
 
 export default function UserNew() {
-  const userForm = useRef();
+  const registerForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
   const router = useRouter();
@@ -13,10 +15,10 @@ export default function UserNew() {
     if (formProcessing) return;
     setError(null);
     setFormProcessing(true);
-    const form = new FormData(userForm.current);
+    const form = new FormData(registerForm.current);
     const payload = {
       email: form.get('email'),
-      fullName: form.get('fullName'),
+      fullName: form.get('name'),
       password: form.get('password')
     };
 
@@ -45,8 +47,37 @@ export default function UserNew() {
 
   return (
     <Layout>
-      Register
-      <p>Name: </p>
+      <section className="section">
+        <h2>Create a new account</h2>
+        <form className="form" onSubmit={handleSubmit} ref={registerForm}>
+          <div>
+            <label htmlFor="name">Name:</label>
+            <input type="name" id="name" name="name" required />
+          </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div>
+            <label htmlFor="passwordConfirm">Password Confirm:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" required />
+          </div>
+          <button type="submit" disabled={formProcessing}>
+            {formProcessing ? 'Creating...' : 'Register'}
+          </button>
+          {error && <div className="form__error">Account not created {error}</div>}
+          <p>
+            Forget password? <Link href="/user/forget">Click</Link>
+          </p>
+          <p>
+            Have already account? <Link href="/user/login">Login</Link>
+          </p>
+        </form>
+      </section>
     </Layout>
   );
 }
