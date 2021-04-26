@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/client';
 import styled from 'styled-components';
 import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
 //style - Nav
@@ -10,6 +11,8 @@ const Container = styled.div`
 `;
 
 const Navigation = ({ sidebar, setSidebar }) => {
+  const [session, loading] = useSession();
+  //console.log(session, 'session');
   return (
     <>
       <nav className="nav">
@@ -19,46 +22,67 @@ const Navigation = ({ sidebar, setSidebar }) => {
           <div className={sidebar ? 'bar open' : 'bar'}></div>
         </button>
         <div className="nav__logo">CakeMe</div>
-        <ul>
-          <li>
-            <Link href="/">
-              <Home />
-            </Link>
-          </li>
-          <li>
-            <Link href="/favorite">
-              <Favorite />
-            </Link>
-          </li>
-          <li>
-            <Link href="/add">
-              <AddBox />
-            </Link>
-          </li>
-          <li>
-            <Link href="/basket">
-              <LocalMall />
-            </Link>
-          </li>
-          <li>
-            <Link href="/logout">
+        {session ? (
+          <ul>
+            <li>
+              <Link href="/">
+                <Home />
+              </Link>
+            </li>
+            <li>
+              <Link href="/favorite">
+                <Favorite />
+              </Link>
+            </li>
+            <li>
+              <Link href="/add">
+                <AddBox />
+              </Link>
+            </li>
+            <li>
+              <Link href="/basket">
+                <LocalMall />
+              </Link>
+            </li>
+            <li onClick={signOut} aria-hidden="true">
               <PowerSettingsNew />
-            </Link>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        ) : (
+          <ul>
+            <li>
+              <Link href="/user/login">Login</Link>
+            </li>
+            <li>
+              <Link href="/user/register">Register</Link>
+            </li>
+          </ul>
+        )}
       </nav>
       <div className={sidebar ? 'sidebar open' : 'sidebar'}>
-        <ul>
-          <li>
-            <Link href="/products">My Products</Link>
-          </li>
-          <li>
-            <Link href="/messages">Messages</Link>
-          </li>
-          <li>
-            <Link href="/orders">Orders</Link>
-          </li>
-        </ul>
+        {session ? (
+          <ul>
+            <li>
+              <Link href="/products">My Products</Link>
+            </li>
+            <li>
+              <Link href="/messages">Messages</Link>
+            </li>
+            <li>
+              <Link href="/orders">Orders</Link>
+            </li>
+          </ul>
+        ) : (
+          <ul>
+            <li>
+              <Link href="/user/login">Login</Link>
+            </li>
+            <li>
+              <Link href="/user/register">Register</Link>
+            </li>
+            <li>Login or create account to see more!</li>
+          </ul>
+        )}
       </div>
     </>
   );

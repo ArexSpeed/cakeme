@@ -2,13 +2,19 @@ import { useRef, useState } from 'react';
 import Layout from 'components/Layout';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useSession } from 'next-auth/client';
 import { signIn } from 'next-auth/client';
 
 export default function Login() {
+  const [session] = useSession();
   const loginForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
   const router = useRouter();
+
+  if (session) {
+    router.push('/');
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,27 +37,29 @@ export default function Login() {
   };
 
   return (
-    <Layout>
-      <section className="section">
-        <h2>Login</h2>
-        <form className="form" onSubmit={handleSubmit} ref={loginForm}>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <button type="submit" disabled={formProcessing}>
-            {formProcessing ? 'Checking...' : 'Login'}
-          </button>
-          {error && <div className="form__error">{error}</div>}
-          <p>
-            Forget password? <Link href="/user/forget">Click</Link>
-          </p>
-        </form>
-      </section>
-    </Layout>
+    !session && (
+      <Layout>
+        <section className="section">
+          <h2>Login</h2>
+          <form className="form" onSubmit={handleSubmit} ref={loginForm}>
+            <div>
+              <label htmlFor="email">Email:</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+            <button type="submit" disabled={formProcessing}>
+              {formProcessing ? 'Checking...' : 'Login'}
+            </button>
+            {error && <div className="form__error">{error}</div>}
+            <p>
+              Forget password? <Link href="/user/forget">Click</Link>
+            </p>
+          </form>
+        </section>
+      </Layout>
+    )
   );
 }
