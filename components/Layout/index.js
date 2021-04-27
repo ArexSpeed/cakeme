@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Navigation = ({ sidebar, setSidebar }) => {
-  const [session, loading] = useSession();
+  const [session] = useSession();
   //console.log(session, 'session');
   return (
     <>

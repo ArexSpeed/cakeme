@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 //style Form
 
 export default function UserNew() {
-  const [session] = useSession();
+  const [session, loading] = useSession();
   const registerForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
@@ -52,7 +52,8 @@ export default function UserNew() {
   };
 
   return (
-    !session && (
+    !session &&
+    !loading && (
       <Layout>
         <section className="section">
           <h2>Create a new account</h2>

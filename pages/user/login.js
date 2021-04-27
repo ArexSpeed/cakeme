@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/client';
 import { signIn } from 'next-auth/client';
 
 export default function Login() {
-  const [session] = useSession();
+  const [session, loading] = useSession();
   const loginForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
@@ -37,7 +37,8 @@ export default function Login() {
   };
 
   return (
-    !session && (
+    !session &&
+    !loading && (
       <Layout>
         <section className="section">
           <h2>Login</h2>
