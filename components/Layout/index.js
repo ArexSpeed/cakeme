@@ -35,7 +35,7 @@ const Navigation = ({ sidebar, setSidebar }) => {
               </Link>
             </li>
             <li>
-              <Link href="/add">
+              <Link href="/product/create">
                 <AddBox />
               </Link>
             </li>
