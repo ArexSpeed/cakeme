@@ -18,7 +18,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const product = await getProduct(params.id);
   const bakeryProducts = await getBakeryOffers(product.bakery[0]);
-  console.log(bakeryProducts, 'bakry in static props');
+
   return {
     revalidate: 30,
     props: {
@@ -31,7 +31,6 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export default function ProductPage({ product, bakeryProducts }) {
-  console.log(bakeryProducts, 'bakery in productpage');
   return (
     <Layout>
       <main className="main">
