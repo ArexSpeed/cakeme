@@ -3,6 +3,7 @@ import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
 //style Card
 
 const CardItem = ({ item }) => {
+  console.log(item, 'item');
   return (
     <div className="card">
       <img
@@ -13,7 +14,7 @@ const CardItem = ({ item }) => {
       <div className="card__info">
         <h4>From {item.price}$</h4>
         <h4>
-          <Link href="/">{item.bakery}</Link>
+          <Link href="/">{item.bakery[0]}</Link>
         </h4>
       </div>
       <div className="card__actions">

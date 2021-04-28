@@ -19,8 +19,8 @@ export default function Home({ offers }) {
   const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
 
   return (
-    <>
-      <Layout>
+    <Layout>
+      <>
         <Search />
         <p className="section">All Products: </p>
         <section className="section">
@@ -28,7 +28,7 @@ export default function Home({ offers }) {
             <CardItem key={item.id} item={item} />
           ))}
         </section>
-      </Layout>
-    </>
+      </>
+    </Layout>
   );
 }
