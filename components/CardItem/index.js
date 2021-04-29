@@ -3,7 +3,7 @@ import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
 //style Card
 
 const CardItem = ({ item }) => {
-  console.log(item, 'item');
+  //console.log(item, 'item');
   return (
     <div className="card">
       <img

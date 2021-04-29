@@ -63,7 +63,7 @@ const Navigation = ({ sidebar, setSidebar }) => {
         {session ? (
           <ul>
             <li>
-              <Link href="/products">My Products</Link>
+              <Link href="/product/my">My Products</Link>
             </li>
             <li>
               <Link href="/messages">Messages</Link>
