@@ -1,7 +1,7 @@
 import Layout from 'components/Layout';
 import ProductSite from 'components/ProductSite';
 import getOffers from 'services/offers/getOffers';
-import getProduct from 'services/offers/getProduct';
+import { getProduct } from 'services/offers/getProduct';
 import getBakeryOffers from 'services/offers/getBakeryOffers';
 
 export const getStaticPaths = async () => {

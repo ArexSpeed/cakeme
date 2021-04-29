@@ -1,6 +1,6 @@
 import airDB from 'services/airtableClient';
 
-const getProduct = async (id) => {
+export const getProduct = async (id) => {
   const offers = await airDB('offers')
     .select({ filterByFormula: `id="${id}"` })
     .firstPage();
@@ -20,5 +20,3 @@ export const getMyProducts = async (email) => {
 
   return offers.map((offer) => offer.fields);
 };
-
-export default getProduct;
