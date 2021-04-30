@@ -1,10 +1,13 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 import Layout from 'components/Layout';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import { uploadImage } from 'utils';
+import { GlobalContext } from 'context/ContextProvider';
 
 export default function ProductCreate() {
+  // eslint-disable-next-line no-empty-pattern
+  const [{}, dispatch] = useContext(GlobalContext);
   const createForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
@@ -58,6 +61,7 @@ export default function ProductCreate() {
     });
 
     if (response.ok) {
+      dispatch({ type: 'SET_ACTION_INFO', payload: { active: true, text: 'You added new offer' } });
       router.push('/product/my');
     } else {
       const payload = await response.json();
