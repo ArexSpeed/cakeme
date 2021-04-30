@@ -2,11 +2,13 @@ import { useRef, useState, useEffect } from 'react';
 import Layout from 'components/Layout';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
+import { uploadImage } from 'utils';
 
 export default function ProductCreate() {
   const createForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const router = useRouter();
   const [session, loading] = useSession();
 
@@ -15,6 +17,16 @@ export default function ProductCreate() {
       router.push('/user/login');
     }
   }, [session, loading]);
+
+  //temp wyswietlanie image
+  const handleImagePreview = (e) => {
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    const form = new FormData(createForm.current);
+    const picture = form.get('image');
+    console.log(picture, 'picture one');
+    console.log(`url`, url);
+    setImagePreviewUrl(url);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +43,12 @@ export default function ProductCreate() {
       location: form.get('location')
     };
 
+    if (form.get('image')) {
+      const picture = form.get('image');
+      const file = await uploadImage(picture);
+      payload.imageUrl = file.secure_url;
+    }
+
     const response = await fetch('/api/offers', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -40,7 +58,7 @@ export default function ProductCreate() {
     });
 
     if (response.ok) {
-      router.push('/product/thanks');
+      router.push('/product/my');
     } else {
       const payload = await response.json();
       setFormProcessing(false);
@@ -91,8 +109,13 @@ export default function ProductCreate() {
           </div>
           <div>
             <label htmlFor="image">Image:</label>
-            <input type="text" id="image" name="image" placeholder="https://" />
+            <input type="file" id="image" name="image" onChange={handleImagePreview} />
           </div>
+          {imagePreviewUrl && (
+            <div>
+              <img src={imagePreviewUrl} alt="" />
+            </div>
+          )}
           <button type="submit" disabled={formProcessing}>
             {formProcessing ? 'Checking...' : 'Add'}
           </button>

@@ -7,7 +7,11 @@ const CardItem = ({ item }) => {
   return (
     <div className="card">
       <img
-        src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
+        src={
+          item.imageUrl
+            ? item.imageUrl
+            : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
+        }
         alt=""
       />
       <h3>{item.name}</h3>
