@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Layout from 'components/Layout';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/client';
+import { uploadImage } from 'utils';
 import { getProduct } from 'services/offers/getProduct';
 import isAuthorized from 'services/offers/isAuthorized';
 
@@ -26,7 +27,17 @@ export default function EditPage({ product }) {
   const editForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(product.imageUrl);
   const router = useRouter();
+
+  const handleImagePreview = (e) => {
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    const form = new FormData(editForm.current);
+    const picture = form.get('image');
+    console.log(picture, 'picture one');
+    console.log(`url`, url);
+    setImagePreviewUrl(url);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +54,12 @@ export default function EditPage({ product }) {
       ingredients: form.get('ingredients'),
       location: form.get('location')
     };
+
+    if (form.get('image')) {
+      const picture = form.get('image');
+      const file = await uploadImage(picture);
+      payload.imageUrl = file.secure_url;
+    }
 
     const response = await fetch(`/api/offers/${product.id}`, {
       method: 'PUT',
@@ -113,8 +130,13 @@ export default function EditPage({ product }) {
             </div>
             <div>
               <label htmlFor="image">Image:</label>
-              <input type="text" id="image" name="image" placeholder="https://" />
+              <input type="file" id="image" name="image" onChange={handleImagePreview} />
             </div>
+            {imagePreviewUrl && (
+              <div>
+                <img src={imagePreviewUrl} alt="" />
+              </div>
+            )}
             <button type="submit" disabled={formProcessing}>
               {formProcessing ? 'Checking...' : 'Accept'}
             </button>

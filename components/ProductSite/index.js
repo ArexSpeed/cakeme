@@ -4,15 +4,17 @@ import { AddShoppingCart, ChatBubble, Visibility } from '@material-ui/icons';
 //style ProductSite
 
 const ProductSite = ({ product, bakeryProducts }) => {
-  console.log(product, 'product');
-  console.log(bakeryProducts, 'products');
   const ingriedients = product.ingredients.split(',');
   return (
     <section className="product">
       <div className="product__price">From {product.price}</div>
       <article className="product__top">
         <img
-          src="https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg"
+          src={
+            product.imageUrl
+              ? product.imageUrl
+              : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
+          }
           alt=""
         />
         <div className="product__info">
