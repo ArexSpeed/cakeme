@@ -61,7 +61,10 @@ export default function ProductCreate() {
     });
 
     if (response.ok) {
-      dispatch({ type: 'SET_ACTION_INFO', payload: { active: true, text: 'You added new offer' } });
+      dispatch({
+        type: 'SET_ACTION_INFO',
+        payload: { active: true, text: `You added ${payload.name}` }
+      });
       router.push('/product/my');
     } else {
       const payload = await response.json();

@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import { GlobalContext } from 'context/ContextProvider';
 import Layout from 'components/Layout';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/client';
@@ -24,6 +25,8 @@ export const getServerSideProps = async ({ req, query }) => {
 };
 
 export default function EditPage({ product }) {
+  // eslint-disable-next-line no-empty-pattern
+  const [{}, dispatch] = useContext(GlobalContext);
   const editForm = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
@@ -70,6 +73,10 @@ export default function EditPage({ product }) {
     });
 
     if (response.ok) {
+      dispatch({
+        type: 'SET_ACTION_INFO',
+        payload: { active: true, text: `Updated ${payload.name} correct` }
+      });
       router.push(`/product/my`);
     } else {
       const payload = await response.json();

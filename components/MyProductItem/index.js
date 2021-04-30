@@ -1,7 +1,11 @@
+import { useContext } from 'react';
+import { GlobalContext } from 'context/ContextProvider';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const MyProductItem = ({ item }) => {
+  // eslint-disable-next-line no-empty-pattern
+  const [{}, dispatch] = useContext(GlobalContext);
   const router = useRouter();
   const handleDelete = async () => {
     if (confirm(`Do you want to delete product ${item.name}`)) {
@@ -12,6 +16,10 @@ const MyProductItem = ({ item }) => {
         }
       });
       if (response.ok) {
+        dispatch({
+          type: 'SET_ACTION_INFO',
+          payload: { active: true, text: `Delete ${item.name} correct` }
+        });
         router.push(`/product/my`);
       } else {
         const payload = await response.json();
