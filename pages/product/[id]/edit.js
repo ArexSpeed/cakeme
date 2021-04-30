@@ -3,8 +3,8 @@ import Layout from 'components/Layout';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/client';
 import { uploadImage } from 'utils';
-import { getProduct } from 'services/offers/getProduct';
-import isAuthorized from 'services/offers/isAuthorized';
+import { getProduct } from 'services/products/getProduct';
+import isAuthorized from 'services/products/isAuthorized';
 
 export const getServerSideProps = async ({ req, query }) => {
   const session = await getSession({ req });
@@ -61,7 +61,7 @@ export default function EditPage({ product }) {
       payload.imageUrl = file.secure_url;
     }
 
-    const response = await fetch(`/api/offers/${product.id}`, {
+    const response = await fetch(`/api/products/${product.id}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
       headers: {

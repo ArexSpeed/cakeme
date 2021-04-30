@@ -3,18 +3,18 @@ import CardItem from 'components/CardItem';
 import Layout from 'components/Layout';
 //import Search from 'components/Search';
 import useSWR from 'swr';
-import getOffers from 'services/offers/getOffers';
+import { getProducts } from 'services/products/getProduct';
 import { jsonFetcher } from 'utils';
 import SearchIcon from '@material-ui/icons/Search';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 
 export const getStaticProps = async () => {
-  const offers = await getOffers();
+  const products = await getProducts();
 
   return {
     props: {
-      offers
+      products
     }
   };
 };
@@ -41,8 +41,8 @@ const PriceSlider = withStyles({
   }
 })(Slider);
 
-export default function Home({ offers }) {
-  const { data } = useSWR('/api/offers', jsonFetcher, { initialData: offers });
+export default function Home({ products }) {
+  const { data } = useSWR('/api/products', jsonFetcher, { initialData: products });
   const [priceValue, setPriceValue] = useState([0, 300]);
   const [searchValue, setSearchValue] = useState('');
   const [category, setCategory] = useState('');

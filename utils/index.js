@@ -1,7 +1,7 @@
 export const jsonFetcher = (url) => fetch(url).then((res) => res.json());
 
 export const uploadImage = async (file) => {
-  let response = await fetch('/api/offers/upload');
+  let response = await fetch('/api/products/upload');
   let data = await response.json();
   const formData = new FormData();
   formData.append('file', file);

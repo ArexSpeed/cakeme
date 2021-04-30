@@ -1,15 +1,13 @@
 import Layout from 'components/Layout';
 import ProductSite from 'components/ProductSite';
-import getOffers from 'services/offers/getOffers';
-import { getProduct } from 'services/offers/getProduct';
-import getBakeryOffers from 'services/offers/getBakeryOffers';
+import { getProduct, getProducts, getBakeryProducts } from 'services/products/getProduct';
 
 export const getStaticPaths = async () => {
-  const offers = await getOffers();
+  const products = await getProducts();
 
   return {
-    paths: offers.map((offer) => ({
-      params: { id: String(offer.id) }
+    paths: products.map((product) => ({
+      params: { id: String(product.id) }
     })),
     fallback: true
   };
@@ -17,7 +15,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const product = await getProduct(params.id);
-  const bakeryProducts = await getBakeryOffers(product.bakery[0]);
+  const bakeryProducts = await getBakeryProducts(product.bakery[0]);
 
   return {
     revalidate: 30,

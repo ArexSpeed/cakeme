@@ -5,7 +5,7 @@ const MyProductItem = ({ item }) => {
   const router = useRouter();
   const handleDelete = async () => {
     if (confirm(`Do you want to delete product ${item.name}`)) {
-      const response = await fetch(`/api/offers/${item.id}`, {
+      const response = await fetch(`/api/products/${item.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

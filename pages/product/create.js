@@ -49,7 +49,7 @@ export default function ProductCreate() {
       payload.imageUrl = file.secure_url;
     }
 
-    const response = await fetch('/api/offers', {
+    const response = await fetch('/api/products', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {

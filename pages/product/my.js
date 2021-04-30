@@ -1,7 +1,7 @@
 import MyProductItem from 'components/MyProductItem';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
-import { getMyProducts } from 'services/offers/getProduct';
+import { getMyProducts } from 'services/products/getProduct';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -14,20 +14,20 @@ export const getServerSideProps = async ({ req }) => {
     };
   }
 
-  const offers = await getMyProducts(session.user.email);
+  const products = await getMyProducts(session.user.email);
 
   return {
     props: {
-      offers: offers
+      products: products
     }
   };
 };
 
-const MyProduct = ({ offers }) => {
+const MyProduct = ({ products }) => {
   return (
     <Layout>
       <section className="section">
-        <h2>My offers</h2>
+        <h2>My products</h2>
       </section>
       <section className="section">
         <table className="myProductTable">
@@ -39,7 +39,7 @@ const MyProduct = ({ offers }) => {
             <th>Date</th>
             <th>Actions</th>
           </tr>
-          {offers.map((item) => (
+          {products.map((item) => (
             <MyProductItem key={item.id} item={item} />
           ))}
         </table>

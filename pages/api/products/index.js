@@ -1,12 +1,12 @@
-import getOffers from 'services/offers/getOffers';
-import createOffer from 'services/offers/create';
+import { getProducts } from 'services/products/getProduct';
+import createProduct from 'services/products/create';
 import { getSession } from 'next-auth/client';
 
 export default async (req, res) => {
   switch (req.method) {
     case 'GET': {
-      const offers = await getOffers();
-      res.status(200).json(offers);
+      const products = await getProducts();
+      res.status(200).json(products);
 
       break;
     }
@@ -19,8 +19,8 @@ export default async (req, res) => {
 
         const payload = req.body;
         const userId = session.user.id;
-        const offer = await createOffer(payload, userId);
-        res.status(200).json({ status: 'created', offer });
+        const product = await createProduct(payload, userId);
+        res.status(200).json({ status: 'created', product });
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
