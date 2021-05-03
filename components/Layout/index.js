@@ -30,7 +30,7 @@ const Navigation = ({ sidebar, setSidebar }) => {
               </Link>
             </li>
             <li>
-              <Link href="/favorite">
+              <Link href="/product/favorite">
                 <Favorite />
               </Link>
             </li>
