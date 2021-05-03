@@ -1,7 +1,8 @@
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
+import { GlobalContext } from 'context/ContextProvider';
+import { actionTypes } from 'context/reducer';
 import MyProductItem from 'components/MyProductItem';
 import Layout from 'components/Layout';
-import { GlobalContext } from 'context/ContextProvider';
 import { getSession } from 'next-auth/client';
 import { getMyProducts } from 'services/products/getProduct';
 import ActionInfo from 'components/ActionInfo';
@@ -28,7 +29,27 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 const MyProduct = ({ products }) => {
-  const [{ searchProduct, priceProduct, searchProductCategory }] = useContext(GlobalContext);
+  // eslint-disable-next-line prettier/prettier
+  const [{ searchProduct, priceProduct, searchProductCategory }, dispatch] = useContext(GlobalContext);
+
+  //reset search values
+  useEffect(() => {
+    dispatch(
+      {
+        type: actionTypes.SET_SEARCH_PRODUCT,
+        payload: ''
+      },
+      {
+        type: actionTypes.SET_PRICE_PRODUCT,
+        payload: [0, 300]
+      },
+      {
+        type: actionTypes.SET_PRODUCT_CATEGORY,
+        payload: ''
+      }
+    );
+  }, []);
+
   return (
     <Layout>
       <Search />
