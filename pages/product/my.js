@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import MyProductItem from 'components/MyProductItem';
 import Layout from 'components/Layout';
+import { GlobalContext } from 'context/ContextProvider';
 import { getSession } from 'next-auth/client';
 import { getMyProducts } from 'services/products/getProduct';
 import ActionInfo from 'components/ActionInfo';
+import Search from 'components/Search';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -25,8 +28,10 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 const MyProduct = ({ products }) => {
+  const [{ searchProduct, priceProduct, searchProductCategory }] = useContext(GlobalContext);
   return (
     <Layout>
+      <Search />
       <section className="section">
         <ActionInfo />
       </section>
@@ -43,9 +48,19 @@ const MyProduct = ({ products }) => {
             <th>Date</th>
             <th>Actions</th>
           </tr>
-          {products.map((item) => (
-            <MyProductItem key={item.id} item={item} />
-          ))}
+          {products.map((item) => {
+            if (
+              (item.name.includes(searchProduct) ||
+                item.ingredients.includes(searchProduct) ||
+                item.bakery[0].includes(searchProduct) ||
+                item?.location?.includes(searchProduct)) &&
+              item.category.includes(searchProductCategory) &&
+              item.price >= priceProduct[0] &&
+              item.price <= priceProduct[1]
+            ) {
+              return <MyProductItem key={item.id} item={item} />;
+            }
+          })}
         </table>
       </section>
     </Layout>
