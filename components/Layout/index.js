@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
 import styled from 'styled-components';
 import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
@@ -13,7 +14,8 @@ const Container = styled.div`
 
 const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
   const [session] = useSession();
-  //console.log(session, 'session');
+  const router = useRouter();
+
   return (
     <>
       <nav className="nav">
@@ -25,22 +27,25 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
         <div className="nav__logo">CakeMe</div>
         {session ? (
           <ul>
-            <li>
+            <li className={router.pathname === '/' ? 'active' : ''}>
               <Link href="/">
                 <Home />
               </Link>
             </li>
-            <li>
+            <li className={router.pathname === '/product/favorite' ? 'active' : ''}>
               <Link href="/product/favorite">
                 <Favorite />
               </Link>
             </li>
-            <li>
+            <li className={router.pathname === '/product/create' ? 'active' : ''}>
               <Link href="/product/create">
                 <AddBox />
               </Link>
             </li>
-            <li onClick={() => setOpenBag(!openBag)} aria-hidden="true">
+            <li
+              className={openBag ? 'active' : ''}
+              onClick={() => setOpenBag(!openBag)}
+              aria-hidden="true">
               <LocalMall />
             </li>
             <li onClick={signOut} aria-hidden="true">
@@ -61,13 +66,13 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
       <div className={sidebar ? 'sidebar open' : 'sidebar'}>
         {session ? (
           <ul>
-            <li>
+            <li className={router.pathname === '/product/my' ? 'active' : ''}>
               <Link href="/product/my">My Products</Link>
             </li>
-            <li>
+            <li className={router.pathname === '/messages' ? 'active' : ''}>
               <Link href="/messages">Messages</Link>
             </li>
-            <li>
+            <li className={router.pathname === '/orders' ? 'active' : ''}>
               <Link href="/orders">Orders</Link>
             </li>
           </ul>

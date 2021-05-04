@@ -55,6 +55,9 @@
           height: 3px;
         }
       }
+      &.active {
+        color: $orange1;
+      }
     }
   }
 }
@@ -156,6 +159,9 @@
           width: 100%;
           height: 3px;
         }
+      }
+      &.active {
+        color: $orange1;
       }
     }
   }
