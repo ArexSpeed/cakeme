@@ -1,9 +1,25 @@
 import Link from 'next/link';
 import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
+import { useSession } from 'next-auth/client';
 //style Card
 
 const CardItem = ({ item }) => {
-  //console.log(item, 'item');
+  const [session] = useSession();
+
+  const handleAddToFavorite = async () => {
+    const payload = {
+      product: item,
+      user: session.user
+    };
+    await fetch(`/api/products/favorite`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  };
+
   return (
     <div className="card">
       <img
@@ -22,7 +38,7 @@ const CardItem = ({ item }) => {
         </h4>
       </div>
       <div className="card__actions">
-        <button>
+        <button onClick={handleAddToFavorite}>
           <Favorite />
         </button>
         <button>
