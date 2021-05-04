@@ -38,7 +38,6 @@ export default function Home({ products }) {
         <p className="section">All Products: </p>
         <section className="section">
           {data.map((item) => {
-            console.log(item.name, 'names');
             if (
               (item.name.includes(searchProduct) ||
                 item.ingredients.includes(searchProduct) ||

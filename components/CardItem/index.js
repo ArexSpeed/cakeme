@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/client';
 //style Card
 
 const CardItem = ({ item }) => {
-  const [session] = useSession();
+  const [session, loading] = useSession();
 
   const handleAddToFavorite = async () => {
     const payload = {
@@ -13,6 +13,21 @@ const CardItem = ({ item }) => {
     };
     await fetch(`/api/products/favorite`, {
       method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  };
+
+  const handleRemoveFromFavorite = async () => {
+    console.log('remove');
+    const payload = {
+      product: item,
+      user: session.user
+    };
+    await fetch(`/api/products/favorite`, {
+      method: 'DELETE',
       body: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json'
@@ -38,9 +53,17 @@ const CardItem = ({ item }) => {
         </h4>
       </div>
       <div className="card__actions">
-        <button onClick={handleAddToFavorite}>
-          <Favorite />
-        </button>
+        {session && !loading && (
+          <button
+            onClick={
+              item.favoriteEmail?.includes(session.user.email)
+                ? handleRemoveFromFavorite
+                : handleAddToFavorite
+            }
+            className={item.favoriteEmail?.includes(session.user.email) ? 'favorite' : ''}>
+            <Favorite />
+          </button>
+        )}
         <button>
           <Link href={`/product/${item.id}`}>
             <Visibility />
