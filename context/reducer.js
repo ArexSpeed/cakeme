@@ -5,7 +5,8 @@ export const initialState = {
   },
   searchProduct: '',
   priceProduct: [0, 300],
-  searchProductCategory: ''
+  searchProductCategory: '',
+  bagItems: []
 };
 
 export const actionTypes = {

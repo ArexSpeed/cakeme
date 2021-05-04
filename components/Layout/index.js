@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
 import styled from 'styled-components';
 import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
+import BagModal from 'components/BagModal';
 //style - Nav
 
 const Container = styled.div`
@@ -10,7 +11,7 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const Navigation = ({ sidebar, setSidebar }) => {
+const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
   const [session] = useSession();
   //console.log(session, 'session');
   return (
@@ -39,10 +40,8 @@ const Navigation = ({ sidebar, setSidebar }) => {
                 <AddBox />
               </Link>
             </li>
-            <li>
-              <Link href="/basket">
-                <LocalMall />
-              </Link>
+            <li onClick={() => setOpenBag(!openBag)} aria-hidden="true">
+              <LocalMall />
             </li>
             <li onClick={signOut} aria-hidden="true">
               <PowerSettingsNew />
@@ -90,9 +89,16 @@ const Navigation = ({ sidebar, setSidebar }) => {
 
 export default function Layout({ children }) {
   const [sidebar, setSidebar] = useState(false);
+  const [openBag, setOpenBag] = useState(false);
   return (
     <Container onClick={() => sidebar && setSidebar(false)}>
-      <Navigation sidebar={sidebar} setSidebar={setSidebar} />
+      <Navigation
+        sidebar={sidebar}
+        setSidebar={setSidebar}
+        openBag={openBag}
+        setOpenBag={setOpenBag}
+      />
+      <BagModal open={openBag} />
       {children}
     </Container>
   );
