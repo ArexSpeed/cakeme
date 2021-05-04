@@ -12,12 +12,13 @@ export const actionTypes = {
   SET_ACTION_INFO: 'SET_ACTION_INFO',
   SET_SEARCH_PRODUCT: 'SET_SEARCH_PRODUCT',
   SET_PRICE_PRODUCT: 'SET_PRICE_PRODUCT',
-  SET_PRODUCT_CATEGORY: 'SET_PRODUCT_CATEGORY'
+  SET_PRODUCT_CATEGORY: 'SET_PRODUCT_CATEGORY',
+  RESET_SEARCH: 'RESET_SEARCH'
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_ACTION_INFO':
+    case actionTypes.SET_ACTION_INFO:
       return {
         ...state,
         actionInfo: action.payload
@@ -36,6 +37,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         searchProductCategory: action.payload
+      };
+    case actionTypes.RESET_SEARCH:
+      return {
+        ...state,
+        searchProduct: '',
+        priceProduct: [0, 300],
+        searchProductCategory: ''
       };
 
     default:

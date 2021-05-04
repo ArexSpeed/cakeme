@@ -27,16 +27,7 @@ export default function Home({ products }) {
   //reset search values
   useEffect(() => {
     dispatch({
-      type: actionTypes.SET_SEARCH_PRODUCT,
-      payload: ''
-    });
-    dispatch({
-      type: actionTypes.SET_PRICE_PRODUCT,
-      payload: [0, 300]
-    });
-    dispatch({
-      type: actionTypes.SET_PRODUCT_CATEGORY,
-      payload: ''
+      type: actionTypes.RESET_SEARCH
     });
   }, []);
 
