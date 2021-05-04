@@ -6,33 +6,30 @@ import { useSession } from 'next-auth/client';
 const CardItem = ({ item }) => {
   const [session, loading] = useSession();
 
-  const handleAddToFavorite = async () => {
+  const toggleFavorite = async () => {
+    console.log('toggle');
     const payload = {
       product: item,
       user: session.user
     };
-    await fetch(`/api/products/favorite`, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  };
-
-  const handleRemoveFromFavorite = async () => {
-    console.log('remove');
-    const payload = {
-      product: item,
-      user: session.user
-    };
-    await fetch(`/api/products/favorite`, {
-      method: 'DELETE',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    if (item.favoriteEmail?.includes(session.user.email)) {
+      await fetch(`/api/products/favorite`, {
+        method: 'DELETE',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    } else {
+      await fetch(`/api/products/favorite`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
+    window.location.reload(true);
   };
 
   return (
@@ -55,11 +52,7 @@ const CardItem = ({ item }) => {
       <div className="card__actions">
         {session && !loading && (
           <button
-            onClick={
-              item.favoriteEmail?.includes(session.user.email)
-                ? handleRemoveFromFavorite
-                : handleAddToFavorite
-            }
+            onClick={toggleFavorite}
             className={item.favoriteEmail?.includes(session.user.email) ? 'favorite' : ''}>
             <Favorite />
           </button>
