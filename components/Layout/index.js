@@ -75,6 +75,18 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
             <li className={router.pathname === '/orders' ? 'active' : ''}>
               <Link href="/orders">Orders</Link>
             </li>
+            <li className={router.pathname === '/orders/my' ? 'active' : ''}>
+              <Link href="/orders/my">My shop</Link>
+            </li>
+            <li className={router.pathname === '/premium' ? 'active' : ''}>
+              <Link href="/premium">Premium</Link>
+            </li>
+            <li className={router.pathname === '/settings' ? 'active' : ''}>
+              <Link href="/settings">Settings</Link>
+            </li>
+            <li onClick={signOut} aria-hidden="true">
+              Logout
+            </li>
           </ul>
         ) : (
           <ul>
