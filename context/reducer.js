@@ -14,7 +14,8 @@ export const actionTypes = {
   SET_SEARCH_PRODUCT: 'SET_SEARCH_PRODUCT',
   SET_PRICE_PRODUCT: 'SET_PRICE_PRODUCT',
   SET_PRODUCT_CATEGORY: 'SET_PRODUCT_CATEGORY',
-  RESET_SEARCH: 'RESET_SEARCH'
+  RESET_SEARCH: 'RESET_SEARCH',
+  ADD_TO_BAG: 'ADD_TO_BAG'
 };
 
 const reducer = (state, action) => {
@@ -45,6 +46,11 @@ const reducer = (state, action) => {
         searchProduct: '',
         priceProduct: [0, 300],
         searchProductCategory: ''
+      };
+    case actionTypes.ADD_TO_BAG:
+      return {
+        ...state,
+        bagItems: [...state.bagItems, action.payload]
       };
 
     default:

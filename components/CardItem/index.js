@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
 import { useSession } from 'next-auth/client';
+import AddToCartButton from 'components/AddToCartButton';
 //style Card
 
 const CardItem = ({ item }) => {
@@ -62,9 +63,10 @@ const CardItem = ({ item }) => {
             <Visibility />
           </Link>
         </button>
-        <button>
+        <AddToCartButton item={item} />
+        {/* <button>
           <AddShoppingCart />
-        </button>
+        </button> */}
       </div>
     </div>
   );
