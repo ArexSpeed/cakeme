@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import Link from 'next/link';
 import { GlobalContext } from 'context/ContextProvider';
+import { actionTypes } from 'context/reducer';
 
 const BagModal = ({ open }) => {
   //const [sum, setSum] = useState(0);
@@ -23,24 +24,30 @@ const BagModal = ({ open }) => {
           <h5>{item.name}</h5>
           <div className="bagModal__details-qty">
             <h6>${item.price}</h6>
-            <button className="minus" onClick={() => console.log('minus')}>
+            <button
+              className="minus"
+              onClick={() => dispatch({ type: actionTypes.MINUS_ITEM_TO_BAG, payload: item.id })}>
               -
             </button>
-            <h6>1</h6>
-            <button className="plus" onClick={() => console.log('plus')}>
+            <h6>{item.qty}</h6>
+            <button
+              className="plus"
+              onClick={() => dispatch({ type: actionTypes.PLUS_ITEM_TO_BAG, payload: item.id })}>
               +
             </button>
           </div>
         </div>
-        <button className="delete" onClick={() => console.log('delete')}>
+        <button
+          className="delete"
+          onClick={() => dispatch({ type: actionTypes.DELETE_BAG_ITEM, payload: item.id })}>
           X
         </button>
       </div>
     );
   });
   //totalPrice -> price of one chosen item -> price*qty
-  // let totalPrice = []
-  // totalItems.map(item => totalPrice.push(item.price*item.qty))
+  //let totalPrice = []
+  //totalItems.map((item) => totalPrice.push(item.price * item.qty));
 
   return (
     <>

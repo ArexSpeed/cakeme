@@ -8,7 +8,6 @@ export default async (req, res) => {
       const userEmail = session.user;
       const favorites = await getFavorite(userEmail);
       res.status(200).json(favorites);
-      console.log(favorites, 'favs in api');
       break;
     }
     default:

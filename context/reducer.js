@@ -1,3 +1,7 @@
+// const bagItemsFromStorage = localStorage.getItem('bagItems')
+//   ? JSON.parse(localStorage.getItem('bagItems'))
+//   : [];
+
 export const initialState = {
   actionInfo: {
     active: false,
@@ -15,7 +19,10 @@ export const actionTypes = {
   SET_PRICE_PRODUCT: 'SET_PRICE_PRODUCT',
   SET_PRODUCT_CATEGORY: 'SET_PRODUCT_CATEGORY',
   RESET_SEARCH: 'RESET_SEARCH',
-  ADD_TO_BAG: 'ADD_TO_BAG'
+  ADD_TO_BAG: 'ADD_TO_BAG',
+  PLUS_ITEM_TO_BAG: 'PLUS_ITEM_TO_BAG',
+  MINUS_ITEM_TO_BAG: 'MINUS_ITEM_TO_BAG',
+  DELETE_BAG_ITEM: 'DELETE_BAG_ITEM'
 };
 
 const reducer = (state, action) => {
@@ -52,7 +59,24 @@ const reducer = (state, action) => {
         ...state,
         bagItems: [...state.bagItems, action.payload]
       };
-
+    case actionTypes.PLUS_ITEM_TO_BAG:
+      console.log(action.payload, 'add qty');
+      return {
+        ...state,
+        qty: state.bagItems.filter((x) => x.id === action.payload && x.qty++)
+      };
+    case actionTypes.MINUS_ITEM_TO_BAG:
+      console.log(action.payload, 'minus qty');
+      return {
+        ...state,
+        qty: state.bagItems.filter((x) => x.id === action.payload && x.qty--)
+      };
+    case actionTypes.DELETE_BAG_ITEM:
+      console.log(action.payload, 'item to delete');
+      return {
+        ...state,
+        bagItems: state.bagItems.filter((x) => x.id !== action.payload)
+      };
     default:
       return state;
   }
