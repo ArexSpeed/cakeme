@@ -55,7 +55,7 @@ const FavoriteProducts = ({ products }) => {
             item.price >= priceProduct[0] &&
             item.price <= priceProduct[1]
           ) {
-            return <CardItem key={item.id} item={item} />;
+            return <CardItem key={item.id} product={item} />;
           }
         })}
       </section>

@@ -1,19 +1,40 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Favorite, AddShoppingCart, Visibility } from '@material-ui/icons';
+import { Favorite, Visibility } from '@material-ui/icons';
 import { useSession } from 'next-auth/client';
 import AddToCartButton from 'components/AddToCartButton';
 //style Card
 
-const CardItem = ({ item }) => {
+const CardItem = ({ product }) => {
   const [session, loading] = useSession();
+  const [like, setLike] = useState(false);
+  const [liked, setLiked] = useState([]); //all favorite product id for user
+
+  useEffect(async () => {
+    await fetch(`/api/users/favorite`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => setLiked(data));
+  }, []);
+
+  useEffect(() => {
+    const comparision = liked[0]?.filter((item) => +item === product.id);
+    if (comparision?.length > 0) {
+      setLike(true);
+    }
+  }, [liked]);
 
   const toggleFavorite = async () => {
     console.log('toggle');
     const payload = {
-      product: item,
+      product: product,
       user: session.user
     };
-    if (item.favoriteEmail?.includes(session.user.email)) {
+    if (like) {
       await fetch(`/api/products/favorite`, {
         method: 'DELETE',
         body: JSON.stringify(payload),
@@ -21,6 +42,7 @@ const CardItem = ({ item }) => {
           'Content-Type': 'application/json'
         }
       });
+      setLike(false);
     } else {
       await fetch(`/api/products/favorite`, {
         method: 'PUT',
@@ -29,44 +51,39 @@ const CardItem = ({ item }) => {
           'Content-Type': 'application/json'
         }
       });
+      setLike(true);
     }
-    window.location.reload(true);
   };
 
   return (
     <div className="card">
       <img
         src={
-          item.imageUrl
-            ? item.imageUrl
+          product.imageUrl
+            ? product.imageUrl
             : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
         }
         alt=""
       />
-      <h3>{item.name}</h3>
+      <h3>{product.name}</h3>
       <div className="card__info">
-        <h4>From {item.price}$</h4>
+        <h4>From {product.price}$</h4>
         <h4>
-          <Link href="/">{item.bakery[0]}</Link>
+          <Link href="/">{product.bakery[0]}</Link>
         </h4>
       </div>
       <div className="card__actions">
         {session && !loading && (
-          <button
-            onClick={toggleFavorite}
-            className={item.favoriteEmail?.includes(session.user.email) ? 'favorite' : ''}>
+          <button onClick={toggleFavorite} className={like ? 'favorite' : ''}>
             <Favorite />
           </button>
         )}
         <button>
-          <Link href={`/product/${item.id}`}>
+          <Link href={`/product/${product.id}`}>
             <Visibility />
           </Link>
         </button>
-        <AddToCartButton item={item} />
-        {/* <button>
-          <AddShoppingCart />
-        </button> */}
+        <AddToCartButton item={product} />
       </div>
     </div>
   );

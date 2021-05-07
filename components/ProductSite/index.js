@@ -29,8 +29,6 @@ const ProductSite = ({ product, bakeryProducts }) => {
     }
   }, [liked]);
 
-  console.log(liked, 'liked out');
-
   const toggleFavorite = async () => {
     console.log('toggle');
     const payload = {
@@ -113,7 +111,7 @@ const ProductSite = ({ product, bakeryProducts }) => {
         <p>Other products from {product.bakery[0]}</p>
         <section className="section">
           {bakeryProducts.map((item) => (
-            <CardItem key={item.id} item={item} />
+            <CardItem key={item.id} product={item} />
           ))}
         </section>
       </article>
