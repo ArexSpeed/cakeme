@@ -7,7 +7,29 @@ import { useSession } from 'next-auth/client';
 const ProductSite = ({ product, bakeryProducts }) => {
   const [session, loading] = useSession();
   const [like, setLike] = useState(false);
+  const [liked, setLiked] = useState([]); //all favorite product id for user
   const ingriedients = product.ingredients.split(',');
+
+  useEffect(async () => {
+    await fetch(`/api/users/favorite`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => setLiked(data));
+  }, []);
+
+  useEffect(() => {
+    const comparision = liked[0]?.filter((item) => +item === product.id);
+    console.log(comparision, 'compar');
+    if (comparision?.length > 0) {
+      setLike(true);
+    }
+  }, [liked]);
+
+  console.log(liked, 'liked out');
 
   const toggleFavorite = async () => {
     console.log('toggle');
@@ -16,7 +38,7 @@ const ProductSite = ({ product, bakeryProducts }) => {
       user: session.user
     };
 
-    if (product.favoriteEmail?.includes(session.user.email)) {
+    if (like) {
       const response = await fetch(`/api/products/favorite`, {
         method: 'DELETE',
         body: JSON.stringify(payload),
@@ -43,6 +65,7 @@ const ProductSite = ({ product, bakeryProducts }) => {
     }
     //window.location.reload(true);
   };
+
   return (
     <section className="product">
       <div className="product__price">From {product.price}</div>
@@ -72,7 +95,7 @@ const ProductSite = ({ product, bakeryProducts }) => {
             <button onClick={toggleFavorite}>
               <Favorite
                 style={{
-                  color: product.favoriteEmail?.includes(session.user.email) ? 'orange' : ''
+                  color: like ? 'orange' : ''
                 }}
               />
               <span>Like it</span>
