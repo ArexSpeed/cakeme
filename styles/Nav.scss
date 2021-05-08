@@ -58,6 +58,19 @@
       &.active {
         color: $orange1;
       }
+      & .bag-circle{
+        position: absolute;
+        bottom: 0;
+        right: -5px;
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        background: $orange1;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        font-size: 10px;
+      }
     }
   }
 }

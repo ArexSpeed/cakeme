@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
 import styled from 'styled-components';
 import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
+import { GlobalContext } from 'context/ContextProvider';
 import BagModal from 'components/BagModal';
 //style - Nav
 
@@ -15,6 +16,10 @@ const Container = styled.div`
 const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
   const [session] = useSession();
   const router = useRouter();
+  const [{ bagItems }] = useContext(GlobalContext);
+  //count of item in bag
+  let bagQty = [];
+  bagItems.map((item) => bagQty.push(item.qty));
 
   return (
     <>
@@ -47,6 +52,9 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
               onClick={() => setOpenBag(!openBag)}
               aria-hidden="true">
               <LocalMall />
+              <div className="bag-circle">
+                {bagItems.length > 0 && bagQty.reduce((a, b) => a + b)}
+              </div>
             </li>
             <li onClick={signOut} aria-hidden="true">
               <PowerSettingsNew />
@@ -115,7 +123,7 @@ export default function Layout({ children }) {
         openBag={openBag}
         setOpenBag={setOpenBag}
       />
-      <BagModal open={openBag} />
+      <BagModal open={openBag} setOpen={setOpenBag} />
       {children}
     </Container>
   );

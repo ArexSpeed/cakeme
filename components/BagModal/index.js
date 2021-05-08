@@ -1,14 +1,17 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import Link from 'next/link';
 import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
+import CancelIcon from '@material-ui/icons/Cancel';
 
-const BagModal = ({ open }) => {
-  //const [sum, setSum] = useState(0);
+const BagModal = ({ open, setOpen }) => {
   const [{ bagItems }, dispatch] = useContext(GlobalContext);
   console.log(bagItems, 'bagItems');
-  // totalItems -> array of price and qty of one item in bag
-  let totalItems = [];
+
+  //count totalPrice of bag items
+  let totalPrice = [];
+  bagItems.map((item) => totalPrice.push(item.price * item.qty));
+
   const showBagItems = bagItems.map((item, index) => {
     return (
       <div className="bagModal__item" key={index}>
@@ -45,16 +48,20 @@ const BagModal = ({ open }) => {
       </div>
     );
   });
-  //totalPrice -> price of one chosen item -> price*qty
-  //let totalPrice = []
-  //totalItems.map((item) => totalPrice.push(item.price * item.qty));
 
   return (
     <>
       {open && (
         <div className="bagModal">
-          <h3>My Bag</h3>
-          Total:
+          <div className="bagModal__top">
+            <h3>My Bag</h3>
+            <button className="bagModal__close" onClick={() => setOpen(false)}>
+              <CancelIcon />
+            </button>
+          </div>
+          <div className="bagModal__total">
+            Total: <h6>${totalPrice.reduce((a, b) => a + b)}</h6>
+          </div>
           {showBagItems}
           <Link href="/cart">
             <button className="button-link">Go to cart</button>
