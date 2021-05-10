@@ -11,6 +11,28 @@ const Cart = () => {
   let totalPrice = [];
   bagItems.map((item) => totalPrice.push(item.price * item.qty));
 
+  const handleOrder = () => {
+    bagItems.map(async (item) => {
+      const payload = {
+        product: item,
+        message: 'Hello'
+      };
+      console.log(payload, 'payload in effect');
+      const response = await fetch(`/api/orders`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        alert('Done');
+      } else {
+        alert('Wrong');
+      }
+    });
+  };
+
   const showItems = bagItems.map((item, i) => (
     <>
       <tr key={item.id}>
@@ -74,7 +96,9 @@ const Cart = () => {
           </tr>
         </table>
         <Link href="/">
-          <button className="button">Order</button>
+          <button className="button" onClick={handleOrder}>
+            Order
+          </button>
         </Link>
       </section>
     </Layout>

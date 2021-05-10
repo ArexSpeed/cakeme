@@ -60,7 +60,7 @@ const BagModal = ({ open, setOpen }) => {
             </button>
           </div>
           <div className="bagModal__total">
-            Total: <h6>${totalPrice.reduce((a, b) => a + b)}</h6>
+            Total: <h6>${totalPrice.length > 0 && totalPrice.reduce((a, b) => a + b)}</h6>
           </div>
           {showBagItems}
           <Link href="/cart">
