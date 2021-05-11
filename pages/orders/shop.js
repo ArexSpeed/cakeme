@@ -1,8 +1,8 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { getSession } from 'next-auth/client';
-import { getCustomerOrders } from 'services/orders/getOrder';
+import { getBakeryOrders } from 'services/orders/getOrder';
 import Layout from 'components/Layout';
-import OrderCustomer from 'components/OrderTable/customer';
+import OrderShop from 'components/OrderTable/shop';
 import Search from 'components/Search';
 import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
@@ -17,8 +17,8 @@ export const getServerSideProps = async ({ req }) => {
       }
     };
   }
-
-  const orders = await getCustomerOrders(session.user.email);
+  console.log(session, 'session params');
+  const orders = await getBakeryOrders(session.user.name);
 
   return {
     props: {
@@ -30,24 +30,40 @@ export const getServerSideProps = async ({ req }) => {
 const OrderPage = ({ orders }) => {
   // eslint-disable-next-line prettier/prettier
   const [{ searchProduct, priceProduct, searchProductCategory }, dispatch] = useContext(GlobalContext);
-
+  const [usersOrder, setUsersOrder] = useState([]);
   //reset search values
   useEffect(() => {
     dispatch({
       type: actionTypes.RESET_SEARCH
     });
+    setUsersOrder([]);
+    orders.filter(
+      (order) =>
+        usersOrder.filter((user) => user) !== order.userName &&
+        setUsersOrder((prev) => [...prev, order.userName])
+    );
   }, []);
 
   return (
     <Layout>
       <Search />
       <section className="section">
+        <p className="section">Orders to my bakery: </p>
+        <p>Show order from user:</p>
+        <select>
+          <option value="">All</option>
+          {usersOrder.map((user, i) => (
+            <option key={i} value={user}>
+              {user}
+            </option>
+          ))}
+        </select>
         <table className="myProductTable">
           <tr>
             <th>id</th>
             <th>Img</th>
             <th>Name</th>
-            <th>Bakery</th>
+            <th>User</th>
             <th>Qty</th>
             <th>Price</th>
             <th>Total</th>
@@ -57,12 +73,12 @@ const OrderPage = ({ orders }) => {
           {/* in if search everywhere [0] cause all property in orders are ref from products and airtable save it as array */}
           {orders.map((item) => {
             if (
-              (item.name[0].includes(searchProduct) || item.bakery[0].includes(searchProduct)) &&
+              (item.name[0].includes(searchProduct) || item.userName[0].includes(searchProduct)) &&
               item.category[0].includes(searchProductCategory) &&
               item.price[0] >= priceProduct[0] &&
               item.price[0] <= priceProduct[1]
             ) {
-              return <OrderCustomer key={item.id} item={item} />;
+              return <OrderShop key={item.id} item={item} />;
             }
           })}
         </table>

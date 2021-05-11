@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OrderTable = ({ item }) => {
+const OrderShop = ({ item }) => {
   return (
     <>
       <tr>
@@ -16,7 +16,7 @@ const OrderTable = ({ item }) => {
           />
         </td>
         <td>{item.name}</td>
-        <td>{item.bakery}</td>
+        <td>{item.userName}</td>
         <td>{item.qty}</td>
         <td>{item.price}</td>
         <td>{item.totalPrice}</td>
@@ -30,4 +30,4 @@ const OrderTable = ({ item }) => {
   );
 };
 
-export default OrderTable;
+export default OrderShop;
