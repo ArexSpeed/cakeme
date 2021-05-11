@@ -12,10 +12,13 @@ const Cart = () => {
   bagItems.map((item) => totalPrice.push(item.price * item.qty));
 
   const handleOrder = () => {
+    const orderId = Math.floor(Math.random() * 10000000) + Date.now();
+    console.log(orderId, 'orderID');
     bagItems.map(async (item) => {
       const payload = {
         product: item,
-        message: 'Hello'
+        message: 'Hello',
+        orderId
       };
       console.log(payload, 'payload in effect');
       const response = await fetch(`/api/orders`, {

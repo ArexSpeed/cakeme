@@ -6,6 +6,7 @@ const create = async (payload, product, userId) => {
   const order = await airDB('orders').create([
     {
       fields: {
+        orderId: payload.orderId,
         productId: [product.airtableId],
         user: [userId],
         qty: payload.product.qty,
