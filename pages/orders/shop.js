@@ -17,7 +17,7 @@ export const getServerSideProps = async ({ req }) => {
       }
     };
   }
-  console.log(session, 'session params');
+  //console.log(session, 'session params');
   const orders = await getBakeryOrders(session.user.name);
 
   return {
@@ -31,6 +31,8 @@ const OrderPage = ({ orders }) => {
   // eslint-disable-next-line prettier/prettier
   const [{ searchProduct, priceProduct, searchProductCategory }, dispatch] = useContext(GlobalContext);
   const [usersOrder, setUsersOrder] = useState([]);
+  const [searchUser, setSearchUser] = useState('');
+
   //reset search values
   useEffect(() => {
     dispatch({
@@ -40,19 +42,22 @@ const OrderPage = ({ orders }) => {
     orders.filter(
       (order) =>
         usersOrder.filter((user) => user) !== order.userName &&
-        setUsersOrder((prev) => [...prev, order.userName])
+        setUsersOrder((prev) => [...prev, order.userName[0]])
     );
   }, []);
+  // eslint-disable-next-line no-undef
+  const usersFiltered = [...new Set(usersOrder)];
 
   return (
     <Layout>
       <Search />
       <section className="section">
         <p className="section">Orders to my bakery: </p>
-        <p>Show order from user:</p>
-        <select>
+        <p>Show orders from user:</p>
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+        <select className="orders__select" onChange={(e) => setSearchUser(e.target.value)}>
           <option value="">All</option>
-          {usersOrder.map((user, i) => (
+          {usersFiltered.map((user, i) => (
             <option key={i} value={user}>
               {user}
             </option>
@@ -76,7 +81,8 @@ const OrderPage = ({ orders }) => {
               (item.name[0].includes(searchProduct) || item.userName[0].includes(searchProduct)) &&
               item.category[0].includes(searchProductCategory) &&
               item.price[0] >= priceProduct[0] &&
-              item.price[0] <= priceProduct[1]
+              item.price[0] <= priceProduct[1] &&
+              item.userName[0].includes(searchUser)
             ) {
               return <OrderShop key={item.id} item={item} />;
             }
