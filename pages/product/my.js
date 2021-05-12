@@ -5,6 +5,7 @@ import MyProductItem from 'components/MyProductItem';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
 import { getMyProducts } from 'services/products/getProduct';
+import { getUserHighlights } from 'services/users/getHighlights';
 import ActionInfo from 'components/ActionInfo';
 import Search from 'components/Search';
 
@@ -20,15 +21,17 @@ export const getServerSideProps = async ({ req }) => {
   }
 
   const products = await getMyProducts(session.user.email);
+  const userHighlights = await getUserHighlights(session.user.email);
 
   return {
     props: {
-      products: products
+      products,
+      userHighlights
     }
   };
 };
 
-const MyProduct = ({ products }) => {
+const MyProduct = ({ products, userHighlights }) => {
   // eslint-disable-next-line prettier/prettier
   const [{ searchProduct, priceProduct, searchProductCategory }, dispatch] = useContext(GlobalContext);
 
@@ -47,6 +50,11 @@ const MyProduct = ({ products }) => {
       </section>
       <section className="section">
         <h2>My products</h2>
+      </section>
+      <section className="section">
+        <p>
+          You can highlight <strong>{userHighlights}</strong> products
+        </p>
       </section>
       <section className="section">
         <table className="myProductTable">

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { GlobalContext } from 'context/ContextProvider';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -6,6 +6,7 @@ import Link from 'next/link';
 const MyProductItem = ({ item }) => {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
+  //const [highlight, setHighlight] = useState(false);
   const router = useRouter();
   const handleDelete = async () => {
     if (confirm(`Do you want to delete product ${item.name}`)) {
@@ -30,8 +31,12 @@ const MyProductItem = ({ item }) => {
     }
   };
 
+  const handleHighlight = async () => {
+    //setHighlight(true);
+  };
+
   return (
-    <tr>
+    <tr style={{ backgroundColor: `${item.highlight ? 'orange' : ''}` }}>
       <td>{item.id}</td>
       <td>
         <img
@@ -55,6 +60,9 @@ const MyProductItem = ({ item }) => {
         </Link>
         <button className="delete" onClick={handleDelete}>
           Delete
+        </button>
+        <button className="highlight" onClick={handleHighlight}>
+          Highlight
         </button>
       </td>
     </tr>

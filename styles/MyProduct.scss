@@ -42,6 +42,10 @@
     &.delete {
       background: $red1;
     }
+    &.highlight {
+      width: auto;
+      background: $orange1;
+    }
   }
   & .qty {
     display: flex;
