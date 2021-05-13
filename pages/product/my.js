@@ -65,6 +65,7 @@ const MyProduct = ({ products, userHighlights }) => {
             <th>Price</th>
             <th>Date</th>
             <th>Actions</th>
+            <th>Highlight</th>
           </tr>
           {products.map((item) => {
             if (

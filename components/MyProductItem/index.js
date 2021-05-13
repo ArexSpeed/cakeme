@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { GlobalContext } from 'context/ContextProvider';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -31,15 +31,29 @@ const MyProductItem = ({ item, highlightQty }) => {
     }
   };
 
+  const highlightProduct = async () => {
+    const payload = {
+      item
+    };
+    const response = await fetch(`/api/products/highlights`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  };
+
   const handleHighlight = async () => {
-    console.log('handleHightlight')
+    console.log('handleHightlight');
     const payload = {
       item: item,
-      restQty: highlightQty[0] - 1
-    }
-    console.log(highlightQty, 'qty')
+      restHighlights: highlightQty[0] - 1
+    };
+
     if (highlightQty[0] > 0) {
       if (confirm(`Do you want to highlight product ${item.name}`)) {
+        highlightProduct();
         const response = await fetch(`/api/highlights`, {
           method: 'PUT',
           body: JSON.stringify(payload),
@@ -47,17 +61,31 @@ const MyProductItem = ({ item, highlightQty }) => {
             'Content-Type': 'application/json'
           }
         });
+        if (response.ok) {
+          dispatch({
+            type: 'SET_ACTION_INFO',
+            payload: { active: true, text: `You add highlight to ${item.name}` }
+          });
+          window.location.reload(true);
+        } else {
+          dispatch({
+            type: 'SET_ACTION_INFO',
+            payload: { active: true, text: `Something went wrong!` }
+          });
+        }
       } else {
-        dispatch({
-          type: 'SET_ACTION_INFO',
-          payload: { active: true, text: `You do not have more highlight!` }
-        });
+        return;
       }
+    } else {
+      dispatch({
+        type: 'SET_ACTION_INFO',
+        payload: { active: true, text: `You do not have more highlight!` }
+      });
     }
   };
 
   return (
-    <tr style={{ backgroundColor: `${item.highlight ? '#DDB086' : ''}` }}>
+    <tr style={{ backgroundColor: `${item.highlight === 'true' ? '#DDB086' : ''}` }}>
       <td>{item.id}</td>
       <td>
         <img
@@ -82,9 +110,17 @@ const MyProductItem = ({ item, highlightQty }) => {
         <button className="delete" onClick={handleDelete}>
           Delete
         </button>
-        <button className="highlight" onClick={handleHighlight}>
-          Highlight
-        </button>
+      </td>
+      <td>
+        {item.highlight === 'false' ? (
+          <button className="highlight" onClick={handleHighlight}>
+            Highlight
+          </button>
+        ) : (
+          <span>
+            {item.highlightTill.substr(0, 10)} {item.highlightTill.substr(11, 11)}
+          </span>
+        )}
       </td>
     </tr>
   );

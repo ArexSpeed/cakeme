@@ -56,7 +56,9 @@ const CardItem = ({ product }) => {
   };
 
   return (
-    <div className="card" style={{ backgroundColor: `${product.highlight ? '#DDB086' : ''}` }}>
+    <div
+      className="card"
+      style={{ backgroundColor: `${product.highlight === 'true' ? '#DDB086' : ''}` }}>
       <img
         src={
           product.imageUrl
