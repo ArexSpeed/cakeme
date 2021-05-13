@@ -39,7 +39,7 @@ const PremiumSite = ({ highlightsOffers, userHighlights }) => {
       </section>
       <section className="section">
         {highlightsOffers.map((offer, i) => (
-          <PremiumCard key={i} item={offer} />
+          <PremiumCard key={i} item={offer} highlightQty={userHighlights} />
         ))}
       </section>
     </Layout>

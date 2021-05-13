@@ -76,7 +76,7 @@ const MyProduct = ({ products, userHighlights }) => {
               item.price >= priceProduct[0] &&
               item.price <= priceProduct[1]
             ) {
-              return <MyProductItem key={item.id} item={item} />;
+              return <MyProductItem key={item.id} item={item} highlightQty={userHighlights} />;
             }
           })}
         </table>

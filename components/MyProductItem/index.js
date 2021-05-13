@@ -3,7 +3,7 @@ import { GlobalContext } from 'context/ContextProvider';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const MyProductItem = ({ item }) => {
+const MyProductItem = ({ item, highlightQty }) => {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   //const [highlight, setHighlight] = useState(false);
@@ -32,11 +32,32 @@ const MyProductItem = ({ item }) => {
   };
 
   const handleHighlight = async () => {
-    //setHighlight(true);
+    console.log('handleHightlight')
+    const payload = {
+      item: item,
+      restQty: highlightQty[0] - 1
+    }
+    console.log(highlightQty, 'qty')
+    if (highlightQty[0] > 0) {
+      if (confirm(`Do you want to highlight product ${item.name}`)) {
+        const response = await fetch(`/api/highlights`, {
+          method: 'PUT',
+          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      } else {
+        dispatch({
+          type: 'SET_ACTION_INFO',
+          payload: { active: true, text: `You do not have more highlight!` }
+        });
+      }
+    }
   };
 
   return (
-    <tr style={{ backgroundColor: `${item.highlight ? 'orange' : ''}` }}>
+    <tr style={{ backgroundColor: `${item.highlight ? '#DDB086' : ''}` }}>
       <td>{item.id}</td>
       <td>
         <img

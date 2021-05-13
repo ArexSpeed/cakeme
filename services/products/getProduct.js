@@ -3,7 +3,10 @@ import airDB from 'services/airtableClient';
 export const getProducts = async () => {
   const products = await airDB('products')
     .select({
-      sort: [{ field: 'id', direction: 'desc' }]
+      sort: [
+        { field: 'highlight', direction: 'desc' },
+        { field: 'id', direction: 'desc' }
+      ]
     })
     .firstPage();
 
