@@ -7,5 +7,15 @@ export const getHighlights = async () => {
     })
     .firstPage();
 
-  return highlights.map((highlight) => highlight.fields);
+  return highlights.map((highlight) => ({ airtableId: highlight.id, ...highlight.fields }));
+};
+
+export const getHighlightToPay = async (airtableId) => {
+  console.log(airtableId, 'getHightlightToPay');
+  const highlight = await airDB('highlights').find(airtableId);
+  if (highlight) {
+    return { id: highlight.id, ...highlight.fields };
+  }
+
+  return highlight;
 };
