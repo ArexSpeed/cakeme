@@ -1,11 +1,12 @@
-// import airDB from 'services/airtableClient';
+import airDB from 'services/airtableClient';
 
-// export const getUser = async (id) => {
-//   const users = await airDB('user')
-//     .select({ filterByFormula: `id="${id}"` })
-//     .firstPage();
-
-//   if (products && products[0]) {
-//     return { airtableId: products[0].id, ...products[0].fields };
-//   }
-// };
+export const getUser = async (email) => {
+  console.log(email, 'user in GetUser');
+  const users = await airDB('users')
+    .select({ filterByFormula: `email="${email}"` })
+    .firstPage();
+  console.log(users, 'finded user');
+  if (users && users[0]) {
+    return { airtableId: users[0].id, ...users[0].fields };
+  }
+};

@@ -20,14 +20,14 @@ export const updateProductHighlights = async (item) => {
   return highlights.map((highlight) => highlight.fields);
 };
 
-const update = async (airtableId, payload) => {
-  const validatedProduct = await schema.validateAsync(payload);
-  const product = await airDB('products').update([
-    {
-      id: airtableId,
-      fields: { ...validatedProduct }
-    }
-  ]);
+// const update = async (airtableId, payload) => {
+//   const validatedProduct = await schema.validateAsync(payload);
+//   const product = await airDB('products').update([
+//     {
+//       id: airtableId,
+//       fields: { ...validatedProduct }
+//     }
+//   ]);
 
-  return product;
-};
+//   return product;
+// };
