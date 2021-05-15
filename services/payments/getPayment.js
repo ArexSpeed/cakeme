@@ -12,6 +12,8 @@ export const getPayment = async (id) => {
 };
 
 export const getUserPayments = async (email) => {
+  //console.log(email, 'userPayment mail');
+  console.log(process.env.AIRTABLE_API_KEY, 'process');
   const payments = await airDB('payments')
     .select({ filterByFormula: `userEmail="${email}"` })
     .firstPage();

@@ -40,7 +40,7 @@ const Settings = ({ user }) => {
           Your bakery name: {user.fullName} <button className="button">Change bakery</button>
         </div>
         <div className="settings__row">
-          Password: {user.email} <button className="button">Change password</button>
+          Password: <button className="button">Change password</button>
         </div>
         <button className="button delete">Delete account</button>
       </div>
