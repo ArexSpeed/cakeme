@@ -33,8 +33,8 @@ const createCheckout = async (highlightItem, user) => {
     },
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/premium/${highlight.id}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/premium/${highlight.id}`
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/premium/payments`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/premium/payments`
   };
 
   const session = await stripe.checkout.sessions.create(paymentObject);

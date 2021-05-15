@@ -2,9 +2,9 @@ import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
 // import { getUser } from 'services/users/getUser';
 // import isAuthorized from 'services/products/isAuthorized';
-// import finalizeCheckout from 'services/checkout/finalize';
-// import { getUserHighlights } from 'services/users/highlights';
-import { getPayment, getUserPayments } from 'services/payments/getPayment';
+import { getUserHighlights } from 'services/users/highlights';
+import { getUserPayments } from 'services/payments/getPayment';
+import finalizeCheckout from 'services/checkout/finalize';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -16,32 +16,31 @@ export const getServerSideProps = async ({ req }) => {
       }
     };
   }
-  //console.log(query, 'query in payment');
-  //console.log(session, 'session in props');
-  //const user = await getUser(session.user.email);
-  //console.log(user, 'user in props');
-  const userPayments = await getUserPayments(session.user.email);
-  const lastPayment = await getPayment(userPayments[0].id); //find last payments
-  console.log(lastPayment, 'payment');
-  //const { payment } = await finalizeCheckout(lastPayment.airtableId, session.user.id);
 
-  // if (!isAuthorized(payment, session) || !payment) {
-  //   return {
-  //     notFound: true
-  //   };
-  // }
+  const userPayments = await getUserPayments(session.user.email);
+  const userHighlights = await getUserHighlights(session.user.email);
+  const lastPaymentId = userPayments[0].id; //last payments
+  console.log(lastPaymentId, 'payment');
+  const newHighlightQty = +userPayments[0].highlightQty + +userHighlights;
+  const { payment } = await finalizeCheckout(lastPaymentId, session.user.id, newHighlightQty);
 
   return {
     props: {
-      userPayments
+      userPayments,
+      payment
     }
   };
 };
 
-export default function PaymentStatus({ userPayments }) {
+export default function PaymentStatus({ userPayments, payment }) {
   return (
     <Layout>
       <section className="section">
+        {payment.stripeCheckoutStatus === 'succeeded' ? (
+          <div className="actionInfo">Your payment is succeeded</div>
+        ) : (
+          <div className="actionInfo red">Something was wrong with your payment</div>
+        )}
         <h2>All my payments</h2>
         <table className="myProductTable">
           <tr>

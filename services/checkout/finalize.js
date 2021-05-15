@@ -2,8 +2,9 @@ import Stripe from 'stripe';
 import airDB from 'services/airtableClient';
 import { getPayment } from 'services/payments/getPayment';
 
-export const finalize = async (paymentId, userId) => {
+export const finalize = async (paymentId, userId, addHighlightQty) => {
   console.log(paymentId, 'payment in finalize form front');
+  console.log(addHighlightQty, 'sum highlight');
   let payment = await getPayment(paymentId);
   console.log(payment, 'payment finalize');
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -29,7 +30,7 @@ export const finalize = async (paymentId, userId) => {
       {
         id: userId,
         fields: {
-          highlights: 10
+          highlights: addHighlightQty
         }
       }
     ]);
