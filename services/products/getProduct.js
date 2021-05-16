@@ -13,6 +13,7 @@ export const getProducts = async () => {
   return products.map((product) => product.fields);
 };
 
+// pages/index & api/products
 export const getProduct = async (id) => {
   const products = await airDB('products')
     .select({ filterByFormula: `id="${id}"` })

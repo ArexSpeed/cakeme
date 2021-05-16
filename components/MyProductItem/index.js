@@ -6,7 +6,6 @@ import Link from 'next/link';
 const MyProductItem = ({ item, highlightQty }) => {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
-  //const [highlight, setHighlight] = useState(false);
   const router = useRouter();
   const handleDelete = async () => {
     if (confirm(`Do you want to delete product ${item.name}`)) {
@@ -35,7 +34,7 @@ const MyProductItem = ({ item, highlightQty }) => {
     const payload = {
       item
     };
-    const response = await fetch(`/api/products/highlights`, {
+    await fetch(`/api/products/highlights`, {
       method: 'PUT',
       body: JSON.stringify(payload),
       headers: {

@@ -5,7 +5,7 @@ import MyProductItem from 'components/MyProductItem';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
 import { getMyProducts } from 'services/products/getProduct';
-import { getUserHighlights } from 'services/users/getHighlights';
+import { getUserHighlights } from 'services/users/highlights';
 import ActionInfo from 'components/ActionInfo';
 import Search from 'components/Search';
 
@@ -57,7 +57,7 @@ const MyProduct = ({ products, userHighlights }) => {
         </p>
       </section>
       <section className="section">
-        <table className="myProductTable">
+        <table className="table">
           <tr>
             <th>id</th>
             <th>Img</th>

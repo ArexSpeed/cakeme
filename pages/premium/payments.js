@@ -42,7 +42,7 @@ export default function PaymentStatus({ userPayments, payment }) {
           <div className="actionInfo red">Something was wrong with your payment</div>
         )}
         <h2>All my payments</h2>
-        <table className="myProductTable">
+        <table className="table">
           <tr>
             <th>Offer name</th>
             <th>Status</th>

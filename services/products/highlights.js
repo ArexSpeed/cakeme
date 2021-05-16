@@ -1,5 +1,6 @@
 import airDB from 'services/airtableClient';
 
+// pages/api/products
 export const addHighlight = async (airtableId) => {
   const product = await airDB('products').update([
     {

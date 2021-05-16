@@ -2,7 +2,7 @@ import Layout from 'components/Layout';
 import PremiumCard from 'components/PremiumCard';
 import { getSession } from 'next-auth/client';
 import { getHighlights } from 'services/highlights/getHighlights';
-import { getUserHighlights } from 'services/users/getHighlights';
+import { getUserHighlights } from 'services/users/highlights';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });

@@ -79,7 +79,7 @@ const Cart = () => {
     <Layout>
       <p className="section">Products to order: </p>
       <section className="section">
-        <table className="myProductTable">
+        <table className="table">
           <tr>
             <th>#</th>
             <th>Img</th>

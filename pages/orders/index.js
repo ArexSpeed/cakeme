@@ -42,7 +42,7 @@ const OrderPage = ({ orders }) => {
     <Layout>
       <Search />
       <section className="section">
-        <table className="myProductTable">
+        <table className="table">
           <tr>
             <th>id</th>
             <th>Img</th>

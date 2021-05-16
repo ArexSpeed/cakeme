@@ -63,7 +63,7 @@ const OrderPage = ({ orders }) => {
             </option>
           ))}
         </select>
-        <table className="myProductTable">
+        <table className="table">
           <tr>
             <th>id</th>
             <th>Img</th>
