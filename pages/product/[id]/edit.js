@@ -101,6 +101,7 @@ export default function EditPage({ product }) {
                 <option value="Cakes">Cakes</option>
                 <option value="Breads">Breads</option>
                 <option value="Donuts">Donuts</option>
+                <option value="Cookies">Cookies</option>
               </select>
             </div>
             <div>

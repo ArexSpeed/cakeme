@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
@@ -6,7 +6,7 @@ import Layout from 'components/Layout';
 
 const Cart = () => {
   const [{ bagItems }, dispatch] = useContext(GlobalContext);
-
+  const [message, setMessage] = useState('');
   //count totalPrice of bag items
   let totalPrice = [];
   bagItems.map((item) => totalPrice.push(item.price * item.qty));
@@ -17,7 +17,7 @@ const Cart = () => {
     bagItems.map(async (item) => {
       const payload = {
         product: item,
-        message: 'Hello',
+        message: message,
         orderId
       };
       console.log(payload, 'payload in effect');
@@ -29,7 +29,13 @@ const Cart = () => {
         }
       });
       if (response.ok) {
-        alert('Done');
+        dispatch({
+          type: actionTypes.RESET_BAG_ITEMS
+        });
+        dispatch({
+          type: actionTypes.SET_ACTION_INFO,
+          payload: { active: true, text: `Your order is ready` }
+        });
       } else {
         alert('Wrong');
       }
@@ -70,7 +76,11 @@ const Cart = () => {
       </tr>
       <tr>
         <td colSpan="7">
-          <textarea placeholder="Message to bakery" />
+          <textarea
+            placeholder="Message to bakery"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
         </td>
       </tr>
     </>
@@ -89,20 +99,34 @@ const Cart = () => {
             <th>Qty</th>
             <th>Total</th>
           </tr>
-          {showItems}
-          <tr>
-            <td colSpan="5"></td>
-            <td>Total</td>
-            <td>
-              <strong>{totalPrice.reduce((a, b) => a + b)}</strong>
-            </td>
-          </tr>
+          {bagItems.length > 0 ? (
+            <>
+              {showItems}
+              <tr>
+                <td colSpan="5"></td>
+                <td>Total</td>
+                <td>
+                  <strong>{totalPrice.reduce((a, b) => a + b)}</strong>
+                </td>
+              </tr>
+            </>
+          ) : (
+            <tr>
+              <td colSpan="7">Your bag is empty !</td>
+            </tr>
+          )}
         </table>
-        <Link href="/">
-          <button className="button" onClick={handleOrder}>
-            Order
-          </button>
-        </Link>
+        {bagItems.length > 0 ? (
+          <Link href="/orders">
+            <button className="button" onClick={handleOrder}>
+              Order
+            </button>
+          </Link>
+        ) : (
+          <Link href="/">
+            <button className="button">Products</button>
+          </Link>
+        )}
       </section>
     </Layout>
   );
