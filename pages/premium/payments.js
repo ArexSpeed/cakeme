@@ -1,4 +1,5 @@
 import Layout from 'components/Layout';
+import Link from 'next/link';
 import { getSession } from 'next-auth/client';
 // import { getUser } from 'services/users/getUser';
 // import isAuthorized from 'services/products/isAuthorized';
@@ -26,13 +27,12 @@ export const getServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      userPayments,
       payment
     }
   };
 };
 
-export default function PaymentStatus({ userPayments, payment }) {
+export default function PaymentStatus({ payment }) {
   return (
     <Layout>
       <section className="section">
@@ -41,21 +41,9 @@ export default function PaymentStatus({ userPayments, payment }) {
         ) : (
           <div className="actionInfo red">Something was wrong with your payment</div>
         )}
-        <h2>All my payments</h2>
-        <table className="table">
-          <tr>
-            <th>Offer name</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-          {userPayments.map((item, i) => (
-            <tr key={i}>
-              <td>{item.highlightName}</td>
-              <td>{item.stripeCheckoutStatus}</td>
-              <td>{item.createdDate.substr(0, 10)}</td>
-            </tr>
-          ))}
-        </table>
+        <Link href="/premium">
+          <button className="button">Back to premium</button>
+        </Link>
       </section>
     </Layout>
   );
