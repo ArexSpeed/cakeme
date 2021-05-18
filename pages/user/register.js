@@ -25,6 +25,7 @@ export default function UserNew() {
     const payload = {
       email: form.get('email'),
       fullName: form.get('name'),
+      bakeryName: form.get('name'),
       password: form.get('password')
     };
 
