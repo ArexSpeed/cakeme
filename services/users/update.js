@@ -5,7 +5,8 @@ import crypto from 'crypto';
 const schema = Joi.object({
   email: Joi.string().email().required(),
   fullName: Joi.string().required(),
-  password: Joi.string().required()
+  bakeryName: Joi.string().required(),
+  updateForm: Joi.string().required()
 });
 
 const schemaName = Joi.object({
@@ -17,13 +18,15 @@ const schemaPassword = Joi.object({
 });
 
 export const updateName = async (airtableId, payload) => {
-  const { fullName } = await schemaName.validateAsync(payload);
-
+  const { fullName, email, bakeryName } = await schema.validateAsync(payload);
+  console.log(airtableId, 'airt in updateName');
   const user = await airDB('users').update([
     {
       id: airtableId,
       fields: {
-        fullName
+        fullName,
+        email,
+        bakeryName
       }
     }
   ]);

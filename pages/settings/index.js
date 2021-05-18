@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
 import { getUser } from 'services/users/getUser';
@@ -25,38 +25,62 @@ export const getServerSideProps = async ({ req }) => {
 
 const Settings = ({ user }) => {
   const [deleteAccountBox, setDeleteAccountBox] = useState(false);
+  const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
-  const [changingField, setChangingField] = useState('');
   const [userName, setUserName] = useState(user.fullName);
   const [userEmail, setUserEmail] = useState(user.email);
   const [userBakery, setUserBakery] = useState(user.bakeryName);
+  const accountForm = useRef();
+  const [actionBox, setActionBox] = useState({
+    active: false,
+    text: ''
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('change');
-    // if (formProcessing) return;
-    // setError(null);
-    // setFormProcessing(true);
-    // const form = new FormData(loginForm.current);
-    // const { ok } = await signIn('credentials', {
-    //   redirect: false,
-    //   email: form.get('email'),
-    //   password: form.get('password')
-    // });
+    if (formProcessing) return;
+    setError(null);
+    setFormProcessing(true);
+    const form = new FormData(accountForm.current);
+    const payload = {
+      email: form.get('email'),
+      fullName: form.get('name'),
+      bakeryName: form.get('bakery'),
+      updateForm: 'accountName'
+    };
 
-    // if (ok) {
-    //   router.push('/');
-    // } else {
-    //   setError('Not authorized. Try again.');
-    //   setFormProcessing(false);
-    // }
+    const response = await fetch('/api/users', {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      console.log('Account updated');
+      setActionBox({
+        active: true,
+        text: 'Your account is updated. Please re-login!'
+      });
+      setFormProcessing(false);
+    } else {
+      const payload = await response.json();
+      setFormProcessing(false);
+      setError(payload.error);
+    }
   };
 
   return (
     <Layout>
       <section className="section">
         <h2>Change your account data</h2>
-        <form className="form">
+        {actionBox.active && (
+          <div className="actionInfo">
+            <p>{actionBox.text}</p>
+          </div>
+        )}
+        <form className="form" ref={accountForm} onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name">Name:</label>
             <input
@@ -96,6 +120,7 @@ const Settings = ({ user }) => {
           <button type="submit" disabled={formProcessing}>
             {formProcessing ? 'Checking...' : 'Change'}
           </button>
+          {error && <div className="form__error">Account not updated {error}</div>}
         </form>
         <div className="settings">
           <div className="settings__row">
