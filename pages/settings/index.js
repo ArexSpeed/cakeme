@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
-import { useRouter } from 'next/router';
 import { getUser } from 'services/users/getUser';
 
 export const getServerSideProps = async ({ req }) => {
@@ -25,27 +24,30 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 const Settings = ({ user }) => {
-  const [deleteAccountBox, setDeleteAccountBox] = useState(false);
-  const [error, setError] = useState();
-  const [formProcessing, setFormProcessing] = useState(false);
+  const [passwordBox, setPasswordBox] = useState(false);
+  const [errorAccount, setErrorAccount] = useState();
+  const [errorPassword, setErrorPassword] = useState();
+  const [formAccountProcessing, setFormAccountProcessing] = useState(false);
+  const [formPasswordProcessing, setFormPasswordProcessing] = useState(false);
   const [userName, setUserName] = useState(user.fullName);
   const [userEmail, setUserEmail] = useState(user.email);
   const [userBakery, setUserBakery] = useState(user.bakeryName);
   const accountForm = useRef();
+  const passwordForm = useRef();
   const [actionBox, setActionBox] = useState({
     active: false,
     text: ''
   });
-  const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const submitName = async (e) => {
     e.preventDefault();
-    if (formProcessing) return;
-    setError(null);
-    setFormProcessing(true);
+    if (formAccountProcessing) return;
+    setErrorAccount(null);
+    setFormAccountProcessing(true);
     const form = new FormData(accountForm.current);
     const payload = {
-      email: form.get('email'),
+      email: userEmail,
+      emailNew: form.get('email'),
       fullName: form.get('name'),
       bakeryName: form.get('bakery'),
       updateForm: 'accountName'
@@ -64,22 +66,34 @@ const Settings = ({ user }) => {
         active: true,
         text: 'Your account is updated. Please re-login!'
       });
-      setFormProcessing(false);
+      setFormAccountProcessing(false);
     } else {
       const payload = await response.json();
-      setFormProcessing(false);
-      setError(payload.error);
+      setFormAccountProcessing(false);
+      setErrorAccount(payload.error);
     }
   };
 
-  const deleteAccount = async () => {
-    const form = new FormData(accountForm.current);
+  const submitPassword = async (e) => {
+    e.preventDefault();
+    if (formPasswordProcessing) return;
+    setErrorPassword(null);
+    setFormPasswordProcessing(true);
+    const form = new FormData(passwordForm.current);
     const payload = {
-      email: form.get('email')
+      email: user.email,
+      password: form.get('password'),
+      updateForm: 'accountPassword'
     };
 
+    if (payload.password !== form.get('passwordConfirm')) {
+      setErrorPassword('Given passwords not match');
+      setFormPasswordProcessing(false);
+      return;
+    }
+
     const response = await fetch('/api/users', {
-      method: 'DELETE',
+      method: 'PUT',
       body: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json'
@@ -87,10 +101,15 @@ const Settings = ({ user }) => {
     });
 
     if (response.ok) {
-      router.push('/logout');
+      setActionBox({
+        active: true,
+        text: 'Your password is updated. Please re-login!'
+      });
+      setFormPasswordProcessing(false);
     } else {
       const payload = await response.json();
-      setError(payload.error);
+      setFormPasswordProcessing(false);
+      setErrorPassword(payload.error);
     }
   };
 
@@ -103,7 +122,7 @@ const Settings = ({ user }) => {
             <p>{actionBox.text}</p>
           </div>
         )}
-        <form className="form" ref={accountForm} onSubmit={handleSubmit}>
+        <form className="form" ref={accountForm} onSubmit={submitName}>
           <div>
             <label htmlFor="name">Name:</label>
             <input
@@ -140,31 +159,36 @@ const Settings = ({ user }) => {
               required
             />
           </div>
-          <button type="submit" disabled={formProcessing}>
-            {formProcessing ? 'Checking...' : 'Change'}
+          <button type="submit" disabled={formAccountProcessing}>
+            {formAccountProcessing ? 'Checking...' : 'Change'}
           </button>
-          {error && <div className="form__error">Account not updated {error}</div>}
+          {errorAccount && <div className="form__error">Account not updated {errorAccount}</div>}
         </form>
         <div className="settings">
           <div className="settings__row">
-            Password: <button className="button">Change password</button>
+            Password:{' '}
+            <button className="button" onClick={() => setPasswordBox(true)}>
+              Change password
+            </button>
           </div>
-          <button className="button delete" onClick={() => setDeleteAccountBox(true)}>
-            Delete account
-          </button>
         </div>
-        {deleteAccountBox && (
-          <div className="form__small">
-            <div>Are you sure to delete your account?</div>
-            <div className="settings__row">
-              <button className="button" onClick={deleteAccount}>
-                Yes
-              </button>
-              <button className="button" onClick={() => setDeleteAccountBox(false)}>
-                No
-              </button>
+        {passwordBox && (
+          <form className="form" ref={passwordForm} onSubmit={submitPassword}>
+            <div>
+              <label htmlFor="password">New Password:</label>
+              <input type="password" id="password" name="password" required />
             </div>
-          </div>
+            <div>
+              <label htmlFor="passwordConfirm">Password Confirm:</label>
+              <input type="password" id="passwordConfirm" name="passwordConfirm" required />
+            </div>
+            <button type="submit" disabled={formPasswordProcessing}>
+              {formPasswordProcessing ? 'Checking...' : 'Change'}
+            </button>
+            {errorPassword && (
+              <div className="form__error">Password not updated {errorPassword}</div>
+            )}
+          </form>
         )}
       </section>
     </Layout>
