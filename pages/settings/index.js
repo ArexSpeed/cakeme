@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
 import { getUser } from 'services/users/getUser';
 
 export const getServerSideProps = async ({ req }) => {
@@ -35,6 +36,7 @@ const Settings = ({ user }) => {
     active: false,
     text: ''
   });
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +60,6 @@ const Settings = ({ user }) => {
     });
 
     if (response.ok) {
-      console.log('Account updated');
       setActionBox({
         active: true,
         text: 'Your account is updated. Please re-login!'
@@ -67,6 +68,28 @@ const Settings = ({ user }) => {
     } else {
       const payload = await response.json();
       setFormProcessing(false);
+      setError(payload.error);
+    }
+  };
+
+  const deleteAccount = async () => {
+    const form = new FormData(accountForm.current);
+    const payload = {
+      email: form.get('email')
+    };
+
+    const response = await fetch('/api/users', {
+      method: 'DELETE',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      router.push('/logout');
+    } else {
+      const payload = await response.json();
       setError(payload.error);
     }
   };
@@ -134,7 +157,9 @@ const Settings = ({ user }) => {
           <div className="form__small">
             <div>Are you sure to delete your account?</div>
             <div className="settings__row">
-              <button className="button">Yes</button>
+              <button className="button" onClick={deleteAccount}>
+                Yes
+              </button>
               <button className="button" onClick={() => setDeleteAccountBox(false)}>
                 No
               </button>
