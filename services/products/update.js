@@ -4,7 +4,7 @@ import Joi from 'joi';
 const schema = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  category: Joi.string().valid('Cakes', 'Breads', 'Donuts').required(),
+  category: Joi.string().valid('Cakes', 'Breads', 'Donuts', 'Cookies').required(),
   price: Joi.number().greater(0).required(),
   ingredients: Joi.string().required(),
   location: Joi.string().required(),
