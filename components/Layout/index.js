@@ -109,6 +109,19 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
   );
 };
 
+const Footer = () => {
+  return (
+    <footer>
+      <div>
+        &copy; Cake me{' '}
+        <a href="https://arekcichocki.dev/" target="_blank" rel="noreferrer">
+          arekcichocki.dev
+        </a>
+      </div>
+    </footer>
+  );
+};
+
 export default function Layout({ children }) {
   const [sidebar, setSidebar] = useState(false);
   const [openBag, setOpenBag] = useState(false);
@@ -122,6 +135,7 @@ export default function Layout({ children }) {
       />
       <BagModal open={openBag} setOpen={setOpenBag} />
       {children}
+      <Footer />
     </Container>
   );
 }
