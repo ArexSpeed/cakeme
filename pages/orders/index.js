@@ -6,6 +6,7 @@ import OrderCustomer from 'components/OrderTable/customer';
 import Search from 'components/Search';
 import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
+import ActionInfo from 'components/ActionInfo';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -41,6 +42,9 @@ const OrderPage = ({ orders }) => {
   return (
     <Layout>
       <Search />
+      <section className="section">
+        <ActionInfo />
+      </section>
       <section className="section">
         <table className="table">
           <tr>

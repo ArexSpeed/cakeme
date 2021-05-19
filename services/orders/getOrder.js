@@ -2,7 +2,10 @@ import airDB from 'services/airtableClient';
 
 export const getCustomerOrders = async (userEmail) => {
   const orders = await airDB('orders')
-    .select({ filterByFormula: `userEmail="${userEmail}"` })
+    .select({
+      sort: [{ field: 'id', direction: 'desc' }],
+      filterByFormula: `userEmail="${userEmail}"`
+    })
     .firstPage();
 
   return orders.map((order) => order.fields);
@@ -10,7 +13,7 @@ export const getCustomerOrders = async (userEmail) => {
 
 export const getBakeryOrders = async (bakery) => {
   const orders = await airDB('orders')
-    .select({ filterByFormula: `bakery="${bakery}"` })
+    .select({ sort: [{ field: 'id', direction: 'desc' }], filterByFormula: `bakery="${bakery}"` })
     .firstPage();
 
   return orders.map((order) => order.fields);

@@ -54,7 +54,7 @@ const Search = () => {
           <SearchIcon />
           <input
             type="text"
-            placeholder="Find by name, category, ingridiens"
+            placeholder="Find by name, ingredients, bakery"
             value={searchProduct}
             onChange={(e) =>
               dispatch({ type: actionTypes.SET_SEARCH_PRODUCT, payload: e.target.value })

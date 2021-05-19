@@ -23,6 +23,7 @@ export const actionTypes = {
   PLUS_ITEM_TO_BAG: 'PLUS_ITEM_TO_BAG',
   MINUS_ITEM_TO_BAG: 'MINUS_ITEM_TO_BAG',
   DELETE_BAG_ITEM: 'DELETE_BAG_ITEM',
+  ADD_MESSAGE_TO_BAG_ITEM: 'ADD_MESSAGE_TO_BAG_ITEM',
   RESET_BAG_ITEMS: 'RESET_BAG_ITEMS'
 };
 
@@ -59,6 +60,15 @@ const reducer = (state, action) => {
       return {
         ...state,
         bagItems: [...state.bagItems, action.payload]
+      };
+    case actionTypes.ADD_MESSAGE_TO_BAG_ITEM:
+      return {
+        ...state,
+        message: state.bagItems.filter((x) => {
+          if (x.id === action.payload.id) {
+            x.message = action.payload.message;
+          }
+        })
       };
     case actionTypes.PLUS_ITEM_TO_BAG:
       return {

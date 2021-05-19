@@ -1,26 +1,26 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
 import Layout from 'components/Layout';
 
 const Cart = () => {
   const [{ bagItems }, dispatch] = useContext(GlobalContext);
-  const [message, setMessage] = useState('');
+  const router = useRouter();
   //count totalPrice of bag items
   let totalPrice = [];
   bagItems.map((item) => totalPrice.push(item.price * item.qty));
 
   const handleOrder = () => {
     const orderId = Math.floor(Math.random() * 10000000) + Date.now();
-    console.log(orderId, 'orderID');
     bagItems.map(async (item) => {
       const payload = {
         product: item,
-        message: message,
+        message: item.message,
         orderId
       };
-      console.log(payload, 'payload in effect');
+      //console.log(payload, 'payload in effect');
       const response = await fetch(`/api/orders`, {
         method: 'POST',
         body: JSON.stringify(payload),
@@ -33,9 +33,10 @@ const Cart = () => {
           type: actionTypes.RESET_BAG_ITEMS
         });
         dispatch({
-          type: actionTypes.SET_ACTION_INFO,
-          payload: { active: true, text: `Your order is ready` }
+          type: 'SET_ACTION_INFO',
+          payload: { active: true, text: `Your order is send to bakery` }
         });
+        router.push('/orders');
       } else {
         alert('Wrong');
       }
@@ -78,13 +79,19 @@ const Cart = () => {
         <td colSpan="7">
           <textarea
             placeholder="Message to bakery"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={item.message}
+            onChange={(e) =>
+              dispatch({
+                type: actionTypes.ADD_MESSAGE_TO_BAG_ITEM,
+                payload: { id: item.id, message: e.target.value }
+              })
+            }
           />
         </td>
       </tr>
     </>
   ));
+
   return (
     <Layout>
       <p className="section">Products to order: </p>
@@ -117,11 +124,9 @@ const Cart = () => {
           )}
         </table>
         {bagItems.length > 0 ? (
-          <Link href="/orders">
-            <button className="button" onClick={handleOrder}>
-              Order
-            </button>
-          </Link>
+          <button className="button" onClick={handleOrder}>
+            Order
+          </button>
         ) : (
           <Link href="/">
             <button className="button">Products</button>

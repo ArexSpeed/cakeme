@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import CardItem from 'components/CardItem';
-import { AddShoppingCart, ChatBubble, Favorite } from '@material-ui/icons';
+import { Favorite } from '@material-ui/icons';
 import { useSession } from 'next-auth/client';
+import AddToCartButton from 'components/AddToCartButton';
 //style ProductSite
 
 const ProductSite = ({ product, bakeryProducts }) => {
@@ -23,14 +24,13 @@ const ProductSite = ({ product, bakeryProducts }) => {
 
   useEffect(() => {
     const comparision = liked[0]?.filter((item) => +item === product.id);
-    console.log(comparision, 'compar');
+    //console.log(comparision, 'compar');
     if (comparision?.length > 0) {
       setLike(true);
     }
   }, [liked]);
 
   const toggleFavorite = async () => {
-    console.log('toggle');
     const payload = {
       product: product,
       user: session.user
@@ -99,14 +99,7 @@ const ProductSite = ({ product, bakeryProducts }) => {
               <span>Like it</span>
             </button>
           )}
-          <button>
-            <ChatBubble />
-            <span>Send message</span>
-          </button>
-          <button>
-            <AddShoppingCart />
-            <span>Order this cake</span>
-          </button>
+          <AddToCartButton item={product} />
         </div>
         <p>Other products from {product.bakery[0]}</p>
         <section className="section">

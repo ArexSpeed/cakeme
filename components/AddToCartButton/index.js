@@ -13,7 +13,7 @@ const AddToCartButton = ({ item }) => {
       //add new item
       dispatch({
         type: actionTypes.ADD_TO_BAG,
-        payload: { ...item, qty: 1 }
+        payload: { ...item, qty: 1, message: '' }
       });
     } else {
       //add qty to exist
