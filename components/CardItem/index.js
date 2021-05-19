@@ -63,7 +63,7 @@ const CardItem = ({ product }) => {
         src={
           product.imageUrl
             ? product.imageUrl
-            : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
+            : 'https://img-premium.flaticon.com/png/512/817/817318.png?token=exp=1621429813~hmac=3e55d34284cf75399912a74491860470'
         }
         alt=""
       />
