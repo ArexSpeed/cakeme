@@ -9,8 +9,8 @@ const ProductSite = ({ product, bakeryProducts }) => {
   const [session, loading] = useSession();
   const [like, setLike] = useState(false);
   const [liked, setLiked] = useState([]); //all favorite product id for user
-  const ingriedients = product.ingredients.split(',');
-
+  const ingredients = product.ingredients?.split(',');
+  console.log(ingredients, 'ingredients');
   useEffect(async () => {
     await fetch(`/api/users/favorite`, {
       method: 'GET',
@@ -79,9 +79,9 @@ const ProductSite = ({ product, bakeryProducts }) => {
         <div className="product__info">
           <h2>{product.name}</h2>
           <p>{product.description}</p>
-          <p>Ingridiens:</p>
+          <p>Ingredients:</p>
           <ul>
-            {ingriedients.map((item, i) => (
+            {ingredients.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
