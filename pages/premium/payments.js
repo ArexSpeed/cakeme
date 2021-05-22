@@ -21,7 +21,7 @@ export const getServerSideProps = async ({ req }) => {
   const userPayments = await getUserPayments(session.user.email);
   const userHighlights = await getUserHighlights(session.user.email);
   const lastPaymentId = userPayments[0].id; //last payments
-  console.log(lastPaymentId, 'payment');
+
   const newHighlightQty = +userPayments[0].highlightQty + +userHighlights;
   const { payment } = await finalizeCheckout(lastPaymentId, session.user.id, newHighlightQty);
 

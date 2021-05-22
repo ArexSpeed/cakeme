@@ -17,7 +17,6 @@ export const getServerSideProps = async ({ req }) => {
       }
     };
   }
-  //console.log(session, 'session params');
   const orders = await getBakeryOrders(session.user.name);
 
   return {

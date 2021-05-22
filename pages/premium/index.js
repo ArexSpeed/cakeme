@@ -33,7 +33,7 @@ const PremiumSite = ({ highlightsOffers, userHighlights, userPayments }) => {
   return (
     <Layout>
       <section className="section">
-        Buy highlights for your products and get more prominent on the search engine!
+        Buy highlights for your products and get higher on the search engine!
       </section>
       <section className="section">
         <p>
@@ -44,6 +44,10 @@ const PremiumSite = ({ highlightsOffers, userHighlights, userPayments }) => {
         {highlightsOffers.map((offer, i) => (
           <PremiumCard key={i} item={offer} highlightQty={userHighlights} />
         ))}
+        <h5>
+          *It is currently a test payment, it will not take your money, if you want to check this
+          payment fill a random data and a card number 4242 4242 4242 4242
+        </h5>
       </section>
       <section className="section">
         <h2>All my payments</h2>

@@ -11,7 +11,6 @@ export const getHighlights = async () => {
 };
 
 export const getHighlightToPay = async (airtableId) => {
-  console.log(airtableId, 'getHightlightToPay');
   const highlight = await airDB('highlights').find(airtableId);
   if (highlight) {
     return { id: highlight.id, ...highlight.fields };

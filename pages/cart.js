@@ -20,7 +20,6 @@ const Cart = () => {
         message: item.message,
         orderId
       };
-      //console.log(payload, 'payload in effect');
       const response = await fetch(`/api/orders`, {
         method: 'POST',
         body: JSON.stringify(payload),

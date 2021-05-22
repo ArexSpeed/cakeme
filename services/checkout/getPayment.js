@@ -1,7 +1,6 @@
 import airDB from 'services/airtableClient';
 
 const getPayment = async (id) => {
-  console.log(id, 'getPayment id');
   const payments = await airDB('payments')
     .select({ filterByFormula: `id="${id}"` })
     .firstPage();

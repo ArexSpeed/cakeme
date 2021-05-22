@@ -112,12 +112,7 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
 const Footer = () => {
   return (
     <footer>
-      <div>
-        &copy; Cake me{' '}
-        <a href="https://arekcichocki.dev/" target="_blank" rel="noreferrer">
-          arekcichocki.dev
-        </a>
-      </div>
+      <div>&copy; Cake me </div>
     </footer>
   );
 };

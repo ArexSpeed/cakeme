@@ -3,10 +3,8 @@ import airDB from 'services/airtableClient';
 import { getPayment } from 'services/payments/getPayment';
 
 export const finalize = async (paymentId, userId, addHighlightQty) => {
-  console.log(paymentId, 'payment in finalize form front');
-  console.log(addHighlightQty, 'sum highlight');
   let payment = await getPayment(paymentId);
-  console.log(payment, 'payment finalize');
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const checkout = await stripe.checkout.sessions.retrieve(payment.stripeCheckoutId);
   //zatrzymuje jesli jest nie oplacone ale skonczone

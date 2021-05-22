@@ -18,7 +18,6 @@ const schemaPassword = Joi.object({
 
 export const updateName = async (airtableId, payload) => {
   const { fullName, emailNew, bakeryName } = await schema.validateAsync(payload);
-  console.log(airtableId, 'airt in updateName');
   const user = await airDB('users').update([
     {
       id: airtableId,

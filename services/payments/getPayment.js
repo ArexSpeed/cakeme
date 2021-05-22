@@ -1,7 +1,6 @@
 import airDB from 'services/airtableClient';
 
 export const getPayment = async (id) => {
-  console.log(id, 'getPayment id');
   const payments = await airDB('payments')
     .select({ filterByFormula: `id="${id}"` })
     .firstPage();
@@ -12,8 +11,6 @@ export const getPayment = async (id) => {
 };
 
 export const getUserPayments = async (email) => {
-  //console.log(email, 'userPayment mail');
-  console.log(process.env.AIRTABLE_API_KEY, 'process');
   const payments = await airDB('payments')
     .select({
       sort: [{ field: 'id', direction: 'desc' }],

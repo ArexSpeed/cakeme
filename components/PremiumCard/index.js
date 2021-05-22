@@ -18,11 +18,9 @@ const PremiumCard = ({ item }) => {
 
     if (response.ok) {
       const { checkout } = await response.json();
-      console.log(checkout, 'checkout on front');
       stripe.redirectToCheckout({ sessionId: checkout.id });
     } else {
-      const payload = await response.json();
-      console.log(payload.error, 'error in buy');
+      await response.json();
     }
   };
 

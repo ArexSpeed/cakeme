@@ -44,7 +44,6 @@ const MyProductItem = ({ item, highlightQty }) => {
   };
 
   const handleHighlight = async () => {
-    console.log('handleHightlight');
     const payload = {
       item: item,
       restHighlights: highlightQty[0] - 1

@@ -24,10 +24,6 @@ export default function ProductCreate() {
   //temp wyswietlanie image
   const handleImagePreview = (e) => {
     const url = window.URL.createObjectURL(e.target.files[0]);
-    const form = new FormData(createForm.current);
-    const picture = form.get('image');
-    console.log(picture, 'picture one');
-    console.log(`url`, url);
     setImagePreviewUrl(url);
   };
 
@@ -51,7 +47,7 @@ export default function ProductCreate() {
       const file = await uploadImage(picture);
       payload.imageUrl = file.secure_url;
     }
-    console.log(payload.imageUrl, 'url image');
+
     if (!payload.imageUrl) {
       payload.imageUrl =
         payload.category === 'Cookies'

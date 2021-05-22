@@ -6,7 +6,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 const BagModal = ({ open, setOpen }) => {
   const [{ bagItems }, dispatch] = useContext(GlobalContext);
-  console.log(bagItems, 'bagItems');
 
   //count totalPrice of bag items
   let totalPrice = [];

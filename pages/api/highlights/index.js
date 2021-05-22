@@ -4,7 +4,6 @@ import { substractHighlights } from 'services/users/highlights';
 export default async (req, res) => {
   //check session
   const session = await getSession({ req });
-  console.log(session, 'session');
 
   switch (req.method) {
     case 'PUT': {

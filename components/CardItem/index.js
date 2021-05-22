@@ -29,7 +29,6 @@ const CardItem = ({ product }) => {
   }, [liked]);
 
   const toggleFavorite = async () => {
-    console.log('toggle');
     const payload = {
       product: product,
       user: session.user

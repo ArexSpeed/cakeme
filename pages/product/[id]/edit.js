@@ -35,10 +35,7 @@ export default function EditPage({ product }) {
 
   const handleImagePreview = (e) => {
     const url = window.URL.createObjectURL(e.target.files[0]);
-    const form = new FormData(editForm.current);
-    const picture = form.get('image');
-    console.log(picture, 'picture one');
-    console.log(`url`, url);
+
     setImagePreviewUrl(url);
   };
 

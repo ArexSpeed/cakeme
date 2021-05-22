@@ -38,8 +38,6 @@ export default function ProductPage({ product, bakeryProducts }) {
   const [like, setLike] = useState(false);
   const [liked, setLiked] = useState([]); //all favorite product id for user
   const [ingredients, setIngredients] = useState();
-  // const ingredients = product.ingredients?.split(',');
-  // console.log(ingredients, 'ingredients');
 
   useEffect(() => {
     if (product) {
@@ -60,7 +58,7 @@ export default function ProductPage({ product, bakeryProducts }) {
 
   useEffect(() => {
     const comparision = liked[0]?.filter((item) => +item === product.id);
-    //console.log(comparision, 'compar');
+
     if (comparision?.length > 0) {
       setLike(true);
     }
@@ -80,7 +78,7 @@ export default function ProductPage({ product, bakeryProducts }) {
           'Content-Type': 'application/json'
         }
       });
-      console.log(response, 'response in delete');
+
       if (response.ok) {
         setLike(false);
       }
@@ -92,7 +90,7 @@ export default function ProductPage({ product, bakeryProducts }) {
           'Content-Type': 'application/json'
         }
       });
-      console.log(response, 'response in  put');
+
       if (response.ok) {
         setLike(true);
       }

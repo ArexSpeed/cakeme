@@ -8,7 +8,6 @@ const AddToCartButton = ({ item }) => {
 
   const addToCart = () => {
     const newItem = bagItems.filter((bag) => bag.id === item.id);
-    console.log(newItem, 'new Item');
     if (newItem.length < 1) {
       //add new item
       dispatch({

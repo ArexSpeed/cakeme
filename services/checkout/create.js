@@ -5,7 +5,7 @@ import { getHighlightToPay } from 'services/highlights/getHighlights';
 const createCheckout = async (highlightItem, user) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const highlight = await getHighlightToPay(highlightItem.airtableId);
-  //console.log(highlight, 'highlight in paymanet');
+
   const lineItems = [
     {
       price_data: {
@@ -38,7 +38,7 @@ const createCheckout = async (highlightItem, user) => {
   };
 
   const session = await stripe.checkout.sessions.create(paymentObject);
-  //console.log(session, 'session in service');
+
   await airDB('payments').create([
     {
       fields: {

@@ -20,10 +20,7 @@ export default async (req, res) => {
         const payload = req.body;
         const userId = session.user.id;
         const product = await getProduct(payload.product.id);
-        console.log(payload, 'paylaod in api');
-        console.log(userId, 'userId in api');
         const order = await create(payload, product, userId);
-        console.log(order, 'product in api');
         res.status(200).json({ status: 'created', order });
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
