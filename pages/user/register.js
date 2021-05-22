@@ -9,6 +9,7 @@ export default function UserNew() {
   const [session, loading] = useSession();
   const registerForm = useRef();
   const [error, setError] = useState();
+  const [createInfo, setCreateInfo] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
   const router = useRouter();
 
@@ -44,7 +45,8 @@ export default function UserNew() {
     });
 
     if (response.ok) {
-      router.push('/');
+      setCreateInfo('Account is created. Now you can login');
+      setFormProcessing(false);
     } else {
       const payload = await response.json();
       setFormProcessing(false);
@@ -78,6 +80,11 @@ export default function UserNew() {
             <button type="submit" disabled={formProcessing}>
               {formProcessing ? 'Creating...' : 'Register'}
             </button>
+            {createInfo && (
+              <div className="actionInfo">
+                <p>{createInfo}</p>
+              </div>
+            )}
             {error && <div className="form__error">Account not created {error}</div>}
             <p>
               Have already account? <Link href="/user/login">Login</Link>

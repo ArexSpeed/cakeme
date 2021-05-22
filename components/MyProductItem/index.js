@@ -87,14 +87,7 @@ const MyProductItem = ({ item, highlightQty }) => {
     <tr style={{ backgroundColor: `${item.highlight === 'true' ? '#DDB086' : ''}` }}>
       <td>{item.id}</td>
       <td>
-        <img
-          src={
-            item.imageUrl
-              ? item.imageUrl
-              : 'https://img-premium.flaticon.com/png/512/817/817318.png?token=exp=1621429813~hmac=3e55d34284cf75399912a74491860470'
-          }
-          alt=""
-        />
+        <img src={item.imageUrl ? item.imageUrl : ''} alt="" />
       </td>
       <td>{item.name}</td>
       <td>{item.price}</td>
@@ -103,7 +96,7 @@ const MyProductItem = ({ item, highlightQty }) => {
         <Link href={`/product/${item.id}/edit`}>
           <button className="edit">Edit</button>
         </Link>
-        <Link href={`/product/${item.id}/owner`}>
+        <Link href={`/product/${item.id}`}>
           <button className="show">Show</button>
         </Link>
         <button className="delete" onClick={handleDelete}>

@@ -59,14 +59,7 @@ const CardItem = ({ product }) => {
     <div
       className="card"
       style={{ backgroundColor: `${product.highlight === 'true' ? '#DDB086' : ''}` }}>
-      <img
-        src={
-          product.imageUrl
-            ? product.imageUrl
-            : 'https://img-premium.flaticon.com/png/512/817/817318.png?token=exp=1621429813~hmac=3e55d34284cf75399912a74491860470'
-        }
-        alt=""
-      />
+      <img src={product.imageUrl ? product.imageUrl : ''} alt="" />
       <h3>{product.name}</h3>
       <div className="card__info">
         <h4>From {product.price}$</h4>

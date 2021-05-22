@@ -35,6 +35,7 @@ const create = async (payload) => {
         bakeryName,
         passwordSalt,
         passwordHash,
+        highlights: 0,
         role: 'regular'
       }
     }

@@ -55,13 +55,13 @@ export default function ProductCreate() {
     if (!payload.imageUrl) {
       payload.imageUrl =
         payload.category === 'Cookies'
-          ? 'https://img-premium.flaticon.com/png/512/164/164659.png?token=exp=1621429741~hmac=c2124061badbc65f9cef60a8c2c30d70'
+          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621685454/zumsucm6bpzihfxysxut.png'
           : payload.category === 'Cakes'
-          ? 'https://img-premium.flaticon.com/png/512/817/817318.png?token=exp=1621429813~hmac=3e55d34284cf75399912a74491860470'
+          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621683749/jhsptiqv4ejfp5i3oq2h.png'
           : payload.category === 'Breads'
-          ? 'https://img-premium.flaticon.com/png/512/3014/3014502.png?token=exp=1621429894~hmac=99ff3c77a8b96e5af5b72e6a1b5facf0'
+          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621685356/xct3ve9xt1tckoaglq8g.png'
           : payload.category === 'Donuts'
-          ? 'https://img-premium.flaticon.com/png/512/3496/3496528.png?token=exp=1621429920~hmac=92aee1791b200e6f4d081dd92c9221f7'
+          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621685424/d648xaav7joomyviafji.jpg'
           : '';
     }
 
