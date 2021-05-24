@@ -124,8 +124,8 @@ export default function ProductPage({ product, bakeryProducts }) {
             </div>
           </article>
           <article>
-            <div className="productActions">
-              {session && !loading && (
+            {session && !loading && (
+              <div className="productActions">
                 <button onClick={toggleFavorite}>
                   <Favorite
                     style={{
@@ -134,9 +134,15 @@ export default function ProductPage({ product, bakeryProducts }) {
                   />
                   <span>Like it</span>
                 </button>
-              )}
-              <AddToCartButton item={product} />
-            </div>
+                <AddToCartButton item={product} />
+              </div>
+            )}
+            {!session && (
+              <div className="productActions">
+                <h4>You have to login to order this product</h4>
+              </div>
+            )}
+
             <p>Other products from {product?.bakery[0]}</p>
             <section className="section">
               {bakeryProducts?.map((item) => (

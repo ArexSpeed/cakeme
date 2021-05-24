@@ -11,6 +11,11 @@ import BagModal from 'components/BagModal';
 const Container = styled.div`
   width: 100vw;
   min-height: 100vh;
+  position: relative;
+`;
+
+const Wrapper = styled.div`
+  padding-bottom: 70px;
 `;
 
 const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
@@ -29,7 +34,9 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
           <div className={sidebar ? 'bar open' : 'bar'}></div>
           <div className={sidebar ? 'bar open' : 'bar'}></div>
         </button>
-        <div className="nav__logo">CakeMe</div>
+        <Link href="/">
+          <div className="nav__logo">CakeMe</div>
+        </Link>
         {session ? (
           <ul>
             <li className={router.pathname === '/' ? 'active' : ''}>
@@ -122,14 +129,16 @@ export default function Layout({ children }) {
   const [openBag, setOpenBag] = useState(false);
   return (
     <Container onClick={() => sidebar && setSidebar(false)}>
-      <Navigation
-        sidebar={sidebar}
-        setSidebar={setSidebar}
-        openBag={openBag}
-        setOpenBag={setOpenBag}
-      />
-      <BagModal open={openBag} setOpen={setOpenBag} />
-      {children}
+      <Wrapper>
+        <Navigation
+          sidebar={sidebar}
+          setSidebar={setSidebar}
+          openBag={openBag}
+          setOpenBag={setOpenBag}
+        />
+        <BagModal open={openBag} setOpen={setOpenBag} />
+        {children}
+      </Wrapper>
       <Footer />
     </Container>
   );

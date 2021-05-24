@@ -167,7 +167,7 @@ const Settings = ({ user }) => {
         <div className="settings">
           <div className="settings__row">
             Password:{' '}
-            <button className="button" onClick={() => setPasswordBox(true)}>
+            <button className="button" onClick={() => setPasswordBox(!passwordBox)}>
               Change password
             </button>
           </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Favorite, Visibility } from '@material-ui/icons';
+import { Favorite } from '@material-ui/icons';
 import { useSession } from 'next-auth/client';
 import AddToCartButton from 'components/AddToCartButton';
 //style Card
@@ -58,27 +58,24 @@ const CardItem = ({ product }) => {
     <div
       className="card"
       style={{ backgroundColor: `${product.highlight === 'true' ? '#DDB086' : ''}` }}>
-      <img src={product.imageUrl ? product.imageUrl : ''} alt="" />
-      <h3>{product.name}</h3>
-      <div className="card__info">
-        <h4>From {product.price}$</h4>
-        <h4>
-          <Link href="/">{product.bakery[0]}</Link>
-        </h4>
-      </div>
-      <div className="card__actions">
-        {session && !loading && (
+      <Link href={`/product/${product.id}`}>
+        <div className="card__wrapper">
+          <img src={product.imageUrl ? product.imageUrl : ''} alt="" />
+          <h3>{product.name}</h3>
+          <div className="card__info">
+            <h4>From {product.price}$</h4>
+            <h4>{product.bakery[0]}</h4>
+          </div>
+        </div>
+      </Link>
+      {session && !loading && (
+        <div className="card__actions">
           <button onClick={toggleFavorite} className={like ? 'favorite' : ''}>
             <Favorite />
           </button>
-        )}
-        <button>
-          <Link href={`/product/${product.id}`}>
-            <Visibility />
-          </Link>
-        </button>
-        <AddToCartButton item={product} />
-      </div>
+          <AddToCartButton item={product} />
+        </div>
+      )}
     </div>
   );
 };
