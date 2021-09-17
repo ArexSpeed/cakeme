@@ -8,13 +8,19 @@
   width: 100vw;
   background-image: url('https://res.cloudinary.com/dbpsxmtcb/image/upload/v1631873935/bg_zvuzrt.jpg');
   background-size: cover;
-  background-position-y: -100px;
   background-repeat: no-repeat;
   background-color: rgba(0,0,0,.7);
+  @media screen and (max-width: 768px) {
+    height: 350px;
+  }
   &__title {
     font-size: 48px;
     max-width: 900px;
     color: #ffffff;
     text-shadow: 0px 0px 4px rgba(0,0,0,1);
+    @media screen and (max-width: 768px) {
+      font-size: 24px;
+      max-width: 90%;
+    }
   }
 }

@@ -43,9 +43,9 @@ export default function Home({ products }) {
           <Search />
         </Hero>
         <p className="section">All Products: </p>
-        <section className="section">
+        <div className="price__section">
           <PriceBox />
-        </section>
+        </div>
         <section className="section">
           {data.map((item) => {
             if (

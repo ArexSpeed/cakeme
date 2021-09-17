@@ -18,16 +18,16 @@ const PriceSlider = withStyles({
   },
   track: {
     height: 20,
-    borderRadius: 10
+    borderRadius: 4
   },
   rail: {
     height: 20,
-    borderRadius: 10
+    borderRadius: 4
   }
 })(Slider);
 
 const PriceBox = () => {
-  const [{ searchProduct, searchProductCategory }, dispatch] = useContext(GlobalContext);
+  const [{}, dispatch] = useContext(GlobalContext);
   const [priceValue, setPriceValue] = useState([0, 300]);
 
   const handleChange = (event, newValue) => {
@@ -38,27 +38,21 @@ const PriceBox = () => {
     });
   };
 
-  const handleChangeCategory = (category) => {
-    dispatch({
-      type: actionTypes.SET_PRODUCT_CATEGORY,
-      payload: category
-    });
-  };
   return (
     <div className="priceBox">
-    <p style={{ margin: '-5px' }}>Price range</p>
-    <PriceSlider
-      value={priceValue}
-      onChange={handleChange}
-      valueLabelDisplay="auto"
-      aria-labelledby="range-slider"
-      max={300}
-    />
-    <p style={{ marginTop: '5px' }}>
-      From ${priceValue[0]} - {priceValue[1]}
-    </p>
-  </div>
-  )
-}
+      <p className="priceBox__title">Filter by price</p>
+      <PriceSlider
+        value={priceValue}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+        aria-labelledby="range-slider"
+        max={300}
+      />
+      <p className="priceBox__range">
+        From ${priceValue[0]} - {priceValue[1]}
+      </p>
+    </div>
+  );
+};
 
 export default PriceBox;
