@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
 import { GlobalContext } from 'context/ContextProvider';
 import BagModal from 'components/BagModal';
+//import logo from './assets/bg.jpg';
 //style - Nav
 
 const Container = styled.div`

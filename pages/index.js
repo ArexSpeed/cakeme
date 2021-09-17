@@ -7,6 +7,8 @@ import Search from 'components/Search';
 import useSWR from 'swr';
 import { getProducts } from 'services/products/getProduct';
 import { jsonFetcher } from 'utils';
+import Hero from 'components/Hero';
+import PriceBox from 'components/PriceBox';
 
 export const getStaticProps = async () => {
   const products = await getProducts();
@@ -34,8 +36,16 @@ export default function Home({ products }) {
   return (
     <Layout>
       <>
-        <Search />
+        <Hero>
+          <p className="hero__title">
+            Find your perfect cake for your party. A lot of choose from 1000 products.
+          </p>
+          <Search />
+        </Hero>
         <p className="section">All Products: </p>
+        <section className="section">
+          <PriceBox />
+        </section>
         <section className="section">
           {data.map((item) => {
             if (
