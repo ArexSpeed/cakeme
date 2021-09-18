@@ -198,7 +198,7 @@ export default function ProductPage({ product, bakeryProducts }) {
             </div>
           </article>
           <article>
-            <div className="product__sectionName">
+            <div className="section__name">
               <span>Other products from {product?.bakery[0]}</span>
             </div>
             <section className="product__other">
@@ -206,7 +206,7 @@ export default function ProductPage({ product, bakeryProducts }) {
                 <CardItem key={item.id} product={item} />
               ))}
             </section>
-            <div className="product__sectionName">
+            <div className="section__name">
               <span>Similar products</span>
             </div>
             <section className="product__other">
