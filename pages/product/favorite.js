@@ -3,6 +3,7 @@ import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
 import CardItem from 'components/CardItem';
 import Layout from 'components/Layout';
+import Hero from 'components/Hero';
 import Search from 'components/Search';
 import { getSession } from 'next-auth/client';
 import { getMyFavoriteProducts } from 'services/products/getProduct';
@@ -40,7 +41,10 @@ const FavoriteProducts = ({ products }) => {
 
   return (
     <Layout>
-      <Search />
+      <Hero>
+        <p className="hero__title">Find between all your favorite products</p>
+        <Search />
+      </Hero>
       <section className="section">
         <h2>My favorite products</h2>
       </section>

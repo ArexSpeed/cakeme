@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
 import styled from 'styled-components';
-import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
+import { Home, Favorite, AddBox, LocalMall } from '@material-ui/icons';
 import { GlobalContext } from 'context/ContextProvider';
 import BagModal from 'components/BagModal';
 //import logo from './assets/bg.jpg';
@@ -63,9 +63,6 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
               <div className="bag-circle">
                 {bagItems.length > 0 && bagQty.reduce((a, b) => a + b)}
               </div>
-            </li>
-            <li onClick={signOut} aria-hidden="true">
-              <PowerSettingsNew />
             </li>
           </ul>
         ) : (
