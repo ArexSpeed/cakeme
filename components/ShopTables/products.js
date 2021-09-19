@@ -3,7 +3,7 @@ import { GlobalContext } from 'context/ContextProvider';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const MyProductItem = ({ item, highlightQty }) => {
+const ShopProduct = ({ item, highlightQty }) => {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const router = useRouter();
@@ -83,8 +83,11 @@ const MyProductItem = ({ item, highlightQty }) => {
   };
 
   return (
-    <tr style={{ backgroundColor: `${item.highlight === 'true' ? '#DDB086' : ''}` }}>
-      <td>{item.id}</td>
+    <tr>
+      <td
+        className={`${item.highlight === 'true' ? 'td__product-id highlight' : 'td__product-id'}`}>
+        {item.id}
+      </td>
       <td>
         <div className="td__product">
           <img className="td__product-image" src={item.imageUrl ? item.imageUrl : ''} alt="" />
@@ -121,4 +124,4 @@ const MyProductItem = ({ item, highlightQty }) => {
   );
 };
 
-export default MyProductItem;
+export default ShopProduct;

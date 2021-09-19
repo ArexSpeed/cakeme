@@ -62,6 +62,13 @@
         align-items: center;
         height: 70px;
         padding: 0 5px;
+        &-id {
+          font-size: 12px;
+          font-weight: 300;
+          &.highlight {
+            background: $orange1;
+          }
+        }
         &-image {
           height: 50px;
           width: 50px;

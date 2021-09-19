@@ -4,7 +4,7 @@ const OrderCustomer = ({ item }) => {
   return (
     <>
       <tr>
-        <td>{item.id}</td>
+        <td className="td__product-id">{item.id}</td>
         <td>
           <div className="td__product">
             <img className="td__product-image" src={item.imageUrl} alt="" />

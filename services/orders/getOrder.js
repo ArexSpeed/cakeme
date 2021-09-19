@@ -13,7 +13,10 @@ export const getCustomerOrders = async (userEmail) => {
 
 export const getBakeryOrders = async (bakery) => {
   const orders = await airDB('orders')
-    .select({ sort: [{ field: 'id', direction: 'desc' }], filterByFormula: `bakery="${bakery}"` })
+    .select({
+      sort: [{ field: 'id', direction: 'desc' }],
+      filterByFormula: `bakeryEmail="${bakery}"`
+    })
     .firstPage();
 
   return orders.map((order) => order.fields);

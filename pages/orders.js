@@ -68,7 +68,7 @@ const Orders = ({ orders }) => {
 
   const showItems = bagItems.map((item, i) => (
     <tr key={item.id}>
-      <td>{i + 1}</td>
+      <td className="td__product-id">{i + 1}</td>
       <td>
         <div className="td__product">
           <img className="td__product-image" src={item.imageUrl} alt="" />
