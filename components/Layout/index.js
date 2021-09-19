@@ -84,9 +84,6 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
             <li className={router.pathname === '/product/my' ? 'active' : ''}>
               <Link href="/product/my">My Products</Link>
             </li>
-            <li className={router.pathname === '/cart' ? 'active' : ''}>
-              <Link href="/cart">My Cart</Link>
-            </li>
             <li className={router.pathname === '/orders' ? 'active' : ''}>
               <Link href="/orders">Orders</Link>
             </li>

@@ -75,8 +75,8 @@ const BagModal = ({ open, setOpen }) => {
             </button>
           </div>
           {showBagItems}
-          <Link href="/cart">
-            <button className="button-link">Go to cart</button>
+          <Link href="/orders">
+            <button className="button-link">Go to order</button>
           </Link>
         </div>
       )}
