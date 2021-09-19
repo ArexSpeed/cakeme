@@ -162,7 +162,7 @@ export default function ProductPage({ product, bakeryProducts }) {
             <div className="product__info">
               <div className="product__price">{product?.price},00 $</div>
               <div className="product__rank">
-                <h4 className="product__rank-score">5,00</h4>
+                <span className="product__rank-score">5,00</span>
                 <svg
                   className="product__rank-star"
                   fill="currentColor"

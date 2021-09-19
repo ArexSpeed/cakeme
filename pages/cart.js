@@ -43,11 +43,12 @@ const Cart = () => {
   };
 
   const showItems = bagItems.map((item, i) => (
-    <>
-      <tr key={item.id}>
-        <td>{i + 1}</td>
-        <td>
+    <tr key={item.id}>
+      <td>{i + 1}</td>
+      <td>
+        <div className="td__product">
           <img
+            className="td__product-image"
             src={
               item.imageUrl
                 ? item.imageUrl
@@ -55,70 +56,75 @@ const Cart = () => {
             }
             alt=""
           />
-        </td>
-        <td>{item.name}</td>
-        <td>{item.bakery}</td>
-        <td>{item.price}</td>
-        <td className="qty">
+          <div className="td__product-info">
+            <div className="td__product-name">{item.name}</div>
+            <div className="td__product-bakery">{item.bakery}</div>
+          </div>
+        </div>
+      </td>
+      <td className="td__product-price">€{item.price}.00 </td>
+      <td>
+        <div className="td__product-qty">
           <button
             className="minus"
-            onClick={() => dispatch({ type: actionTypes.MINUS_ITEM_TO_BAG, payload: item.id })}>
+            onClick={() => {
+              if (item.qty === 1) {
+                dispatch({ type: actionTypes.DELETE_BAG_ITEM, payload: item.id });
+              } else {
+                dispatch({ type: actionTypes.MINUS_ITEM_TO_BAG, payload: item.id });
+              }
+            }}>
             -
           </button>
-          <h6>{item.qty}</h6>
+          <span>{item.qty}</span>
           <button
             className="plus"
             onClick={() => dispatch({ type: actionTypes.PLUS_ITEM_TO_BAG, payload: item.id })}>
             +
           </button>
-        </td>
-        <td>{item.price * item.qty}</td>
-      </tr>
-      <tr>
-        <td colSpan="7">
-          <textarea
-            placeholder="Message to bakery"
-            value={item.message}
-            onChange={(e) =>
-              dispatch({
-                type: actionTypes.ADD_MESSAGE_TO_BAG_ITEM,
-                payload: { id: item.id, message: e.target.value }
-              })
-            }
-          />
-        </td>
-      </tr>
-    </>
+        </div>
+      </td>
+      <td className="td__product-price-total">€{item.price * item.qty}.00</td>
+    </tr>
   ));
 
   return (
     <Layout>
-      <p className="section">Products to order: </p>
+      <section className="section">
+        <div className="form__triangle"></div>
+        <h2>Orders</h2>
+      </section>
+      <section className="section">
+        <div className="table__tabs">
+          <button className="active">Cart</button>
+          <button>Ordered</button>
+        </div>
+      </section>
       <section className="section">
         <table className="table">
-          <tr>
-            <th>#</th>
-            <th>Img</th>
-            <th>Name</th>
-            <th>Bakery</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Total</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th>Price/pcs</th>
+              <th>Qty</th>
+              <th>Total</th>
+            </tr>
+          </thead>
           {bagItems.length > 0 ? (
-            <>
+            <tbody>
               {showItems}
               <tr>
-                <td colSpan="5"></td>
+                <td colSpan="3" className="table__emptyCell"></td>
                 <td>Total</td>
                 <td>
-                  <strong>{totalPrice.reduce((a, b) => a + b)}</strong>
+                  <strong>€{totalPrice.reduce((a, b) => a + b).toFixed(2)}</strong>
                 </td>
               </tr>
-            </>
+            </tbody>
           ) : (
             <tr>
-              <td colSpan="7">Your bag is empty !</td>
+              <td colSpan="5">Your bag is empty !</td>
             </tr>
           )}
         </table>
