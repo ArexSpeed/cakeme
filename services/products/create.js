@@ -8,7 +8,10 @@ const schema = Joi.object({
   price: Joi.number().greater(0).required(),
   ingredients: Joi.string().required(),
   location: Joi.string().required(),
-  imageUrl: Joi.string()
+  score: Joi.number().greater(0).required(),
+  imageFirstUrl: Joi.string(),
+  imageSecondUrl: Joi.string(),
+  imageThirdUrl: Joi.string()
 });
 
 const create = async (payload, userId) => {
