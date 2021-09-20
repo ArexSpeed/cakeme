@@ -77,7 +77,7 @@ export default function UserNew() {
               <label htmlFor="passwordConfirm">Password Confirm:</label>
               <input type="password" id="passwordConfirm" name="passwordConfirm" required />
             </div>
-            <button type="submit" disabled={formProcessing}>
+            <button className="button" type="submit" disabled={formProcessing}>
               {formProcessing ? 'Creating...' : 'Register'}
             </button>
             {createInfo && (

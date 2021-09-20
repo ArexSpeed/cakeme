@@ -13,7 +13,7 @@
   cursor: pointer;
   @media screen and (max-width: 640px) {
     min-width: 208px; // 20% less
-    width: 208px; 
+    width: 208px;
     height: 300px;
   }
   &:hover {
@@ -28,9 +28,9 @@
     width: 260px;
     height: 200px;
     border-radius: 16px 16px 0 0;
-    box-shadow: 0 1px 1px rgba(0,0,0,.25);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
     @media screen and (max-width: 640px) {
-      width: 208px; 
+      width: 208px;
       height: 160px;
     }
   }
@@ -40,7 +40,7 @@
     color: $textblue;
     font-weight: bold;
   }
-  &__wrapper{
+  &__wrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -119,9 +119,71 @@
         transition: all 0.3s ease-in-out;
       }
       &.favorite {
-        color: $orange1; 
+        color: $orange1;
       }
     }
   }
-  
+
+  &__payment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    height: 70px;
+    margin: 8px auto;
+    padding: 0 8px;
+    background: $orange3;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: $orange1;
+      transition: all 0.5s;
+      border-radius: inherit;
+      z-index: -1;
+    }
+    &:hover {
+      transform: scale(1.02);
+      transition: all 0.25s ease-in-out;
+      color: #ffffff;
+      &::after {
+        width: 100%;
+      }
+    }
+    &-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+      &.qty {
+        background: $orange1;
+        margin-left: -8px;
+        padding: 0 20px 0 8px;
+        border-radius: 0 10px 20px 0;
+      }
+    }
+    &-button {
+      background: $green1;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  }
 }

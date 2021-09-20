@@ -160,7 +160,7 @@ export default function ProductPage({ product, bakeryProducts }) {
               </div>
             </div>
             <div className="product__info">
-              <div className="product__price">{product?.price},00 $</div>
+              <div className="product__price">€{product?.price},00</div>
               <div className="product__rank">
                 <span className="product__rank-score">5,00</span>
                 <svg

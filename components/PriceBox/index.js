@@ -49,7 +49,7 @@ const PriceBox = () => {
         max={300}
       />
       <p className="priceBox__range">
-        From ${priceValue[0]} - {priceValue[1]}
+        From €{priceValue[0]} - {priceValue[1]}
       </p>
     </div>
   );

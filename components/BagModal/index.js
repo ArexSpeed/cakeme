@@ -44,7 +44,7 @@ const BagModal = ({ open, setOpen }) => {
                 -
               </button>
             </div>
-            <div className="bagModal__details-price">$ {item.price}</div>
+            <div className="bagModal__details-price">€ {item.price}</div>
           </div>
         </div>
       </div>
@@ -57,7 +57,7 @@ const BagModal = ({ open, setOpen }) => {
         <div className="bagModal">
           <div className="bagModal__top">
             <h3>
-              My Bag <span>(${totalPrice.length > 0 && totalPrice.reduce((a, b) => a + b)})</span>
+              My Bag <span>(€{totalPrice.length > 0 && totalPrice.reduce((a, b) => a + b)})</span>
             </h3>
             <button className="bagModal__close" onClick={() => setOpen(false)}>
               <span>Close</span>

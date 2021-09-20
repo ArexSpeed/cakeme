@@ -37,7 +37,7 @@ const PremiumSite = ({ highlightsOffers, userHighlights, userPayments }) => {
       </section>
       <section className="section">
         <p>
-          Currently you have <strong>{userHighlights}</strong> highlights
+          Currently you have <span className="section__highlight">{userHighlights}</span> highlights
         </p>
       </section>
       <section className="section">
@@ -52,20 +52,29 @@ const PremiumSite = ({ highlightsOffers, userHighlights, userPayments }) => {
       <section className="section">
         <h2>All my payments</h2>
         <table className="table">
-          <tr>
-            <th>ID</th>
-            <th>Offer name</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-          {userPayments.map((item, i) => (
-            <tr key={i}>
-              <td>{item.id}</td>
-              <td>{item.highlightName}</td>
-              <td>{item.stripeCheckoutStatus}</td>
-              <td>{item.createdDate.substr(0, 10)}</td>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Offer name</th>
+              <th>Date</th>
+              <th>Status</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {userPayments.map((item, i) => (
+              <tr key={i}>
+                <td className="td__product-id">{item.id}</td>
+                <td className="td__product-name">{item.highlightName}</td>
+                <td className="td__product-date">{item.createdDate.substr(0, 10)}</td>
+                <td className="td__product-status">
+                  <span
+                    className={`${item.stripeCheckoutStatus === 'succeeded' ? 'correct' : 'fail'}`}>
+                    {item.stripeCheckoutStatus}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </section>
     </Layout>

@@ -51,7 +51,7 @@ export default function Login() {
               <label htmlFor="password">Password:</label>
               <input type="password" id="password" name="password" required />
             </div>
-            <button type="submit" disabled={formProcessing}>
+            <button className="button" type="submit" disabled={formProcessing}>
               {formProcessing ? 'Checking...' : 'Login'}
             </button>
             {error && <div className="form__error">{error}</div>}

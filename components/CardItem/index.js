@@ -61,7 +61,7 @@ const CardItem = ({ product }) => {
           <img src={product.imageUrl ? product.imageUrl : ''} alt="" />
           <p className="card__product-name">{product.name}</p>
           <p className="card__product-bakery">{product.bakery[0]}</p>
-          <p className="card__product-price">{product.price},00 $</p>
+          <p className="card__product-price">€{product.price},00</p>
           <div className="card__rank">
             <span className="card__rank-score">5,0</span>
             <svg

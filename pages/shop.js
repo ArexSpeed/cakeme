@@ -51,7 +51,7 @@ const ShopPage = ({ products, userHighlights, orders }) => {
       </section>
       <section className="section">
         <p>
-          You can highlight <strong>{userHighlights}</strong> products
+          You can highlight <span className="section__highlight">{userHighlights}</span> products
         </p>
       </section>
       <section className="section">

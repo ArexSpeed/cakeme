@@ -25,12 +25,19 @@ const PremiumCard = ({ item }) => {
   };
 
   return (
-    <div className="card" style={{ justifyContent: 'center', alignItems: 'center' }}>
-      <p>{item.qty} highlights</p>
-      <p style={{ fontSize: '30px' }}>€{item.priceCents / 100}.00</p>
-      <p>{item.duration} days per highlight</p>
-      <button className="button" onClick={handleBuy}>
-        Buy
+    <div className="card__payment">
+      <div className="card__payment-col qty">
+        <span style={{ fontSize: '30px', color: '#ffffff', textShadow: '0 0 4px rgba(0,0,0,.5)' }}>
+          {item.qty}
+        </span>
+        <span style={{ fontSize: '12px', color: '#333' }}>highlights</span>
+      </div>
+      <div className="card__payment-col">
+        <span style={{ fontSize: '30px' }}>€{item.priceCents / 100}.00</span>
+        <span style={{ fontSize: '12px' }}>{item.duration} days per highlight</span>
+      </div>
+      <button className="card__payment-button" onClick={handleBuy}>
+        BUY
       </button>
     </div>
   );

@@ -55,6 +55,16 @@ a {
       margin-left: 30px;
     }
   }
+  &__highlight {
+    font-size: 24px;
+    font-weight: bold;
+    background: $orange3;
+    color: #ffffff;
+    text-shadow: 0 0 4px rgba(0,0,0,.5);
+    padding: 4px;
+    border: 2px solid $orange1;
+    border-radius: 4px;
+  }
 }
 
 footer {

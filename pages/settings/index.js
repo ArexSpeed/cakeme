@@ -159,7 +159,7 @@ const Settings = ({ user }) => {
               required
             />
           </div>
-          <button type="submit" disabled={formAccountProcessing}>
+          <button className="button" type="submit" disabled={formAccountProcessing}>
             {formAccountProcessing ? 'Checking...' : 'Change'}
           </button>
           {errorAccount && <div className="form__error">Account not updated {errorAccount}</div>}
@@ -182,7 +182,7 @@ const Settings = ({ user }) => {
               <label htmlFor="passwordConfirm">Password Confirm:</label>
               <input type="password" id="passwordConfirm" name="passwordConfirm" required />
             </div>
-            <button type="submit" disabled={formPasswordProcessing}>
+            <button className="button" type="submit" disabled={formPasswordProcessing}>
               {formPasswordProcessing ? 'Checking...' : 'Change'}
             </button>
             {errorPassword && (
