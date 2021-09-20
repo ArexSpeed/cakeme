@@ -12,6 +12,7 @@ const ShopOrders = ({ item }) => {
           <img className="td__product-image" src={item.imageUrl ? item.imageUrl : ''} alt="" />
           <div className="td__product-info">
             <div className="td__product-name">{item.name}</div>
+            <div className={`td__product-category ${item.category}`}>{item.category}</div>
           </div>
         </div>
       </td>

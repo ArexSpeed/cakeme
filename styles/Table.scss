@@ -90,6 +90,24 @@
           font-size: 12px;
           color: #333;
         }
+        &-category {
+          font-size: 10px;
+          color: #333;
+          padding: 2px 8px;
+          border-radius: 16px;
+          &.Cakes {
+            background: rgb(24, 230, 230);
+          }
+          &.Cookies {
+            background: #ffc0cb;
+          }
+          &.Donuts {
+            background: #b78fe4;
+          }
+          &.Breads {
+            background: #f1d8b8;
+          }
+        }
         &-price {
           height: 100%;
           font-size: 16px;
@@ -222,5 +240,31 @@
   }
   &__emptyCell {
     background: #fff !important;
+  }
+  &__search {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    &-box {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 200px;
+      height: 50px;
+      padding: 4px 8px;
+      background: $orange3;
+      border-radius: 4px;
+      & input {
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        font-weight: 300;
+        font-family: $fontFamily;
+        background: transparent;
+        border: none;
+        outline: none;
+      }
+    }
   }
 }

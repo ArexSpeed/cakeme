@@ -1,6 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
-import { GlobalContext } from 'context/ContextProvider';
-import { actionTypes } from 'context/reducer';
+import { useState } from 'react';
 import Link from 'next/link';
 import Layout from 'components/Layout';
 import { getSession } from 'next-auth/client';
@@ -10,6 +8,7 @@ import { getBakeryOrders } from 'services/orders/getOrder';
 import ActionInfo from 'components/ActionInfo';
 import ShopProduct from 'components/ShopTables/products';
 import ShopOrders from 'components/ShopTables/orders';
+import SearchIcon from '@material-ui/icons/Search';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -36,17 +35,10 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 const ShopPage = ({ products, userHighlights, orders }) => {
-  // eslint-disable-next-line prettier/prettier
-  const [{ searchProduct, priceProduct, searchProductCategory }, dispatch] = useContext(GlobalContext);
   const [currentTab, setCurrentTab] = useState('products');
+  const [productSearch, setProductSearch] = useState('');
+  const [orderSearch, setOrderSearch] = useState('');
   console.log(orders, 'orders');
-
-  //reset search values
-  useEffect(() => {
-    dispatch({
-      type: actionTypes.RESET_SEARCH
-    });
-  }, []);
 
   return (
     <Layout>
@@ -85,44 +77,82 @@ const ShopPage = ({ products, userHighlights, orders }) => {
       </section>
       <section className="section">
         {currentTab === 'products' && (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Date</th>
-                <th>Actions</th>
-                <th>Highlight</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((item) => (
-                <ShopProduct key={item.id} item={item} highlightQty={userHighlights} />
-              ))}
-            </tbody>
-          </table>
+          <>
+            <div className="table__search">
+              <div className="table__search-box">
+                <SearchIcon />
+                <input
+                  type="text"
+                  placeholder="Find product, category"
+                  value={productSearch}
+                  onChange={(e) => setProductSearch(e.target.value)}
+                />
+              </div>
+            </div>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                  <th>Highlight</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products
+                  .filter(
+                    (item) =>
+                      item.name.toLowerCase().includes(productSearch.toLowerCase()) ||
+                      item.category.toLowerCase().includes(productSearch.toLowerCase())
+                  )
+                  .map((item) => (
+                    <ShopProduct key={item.id} item={item} highlightQty={userHighlights} />
+                  ))}
+              </tbody>
+            </table>
+          </>
         )}
         {currentTab === 'orders' && (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Product</th>
-                <th>User</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            {/* in if search everywhere [0] cause all property in orders are ref from products and airtable save it as array */}
-            <tbody>
-              {orders.map((item) => (
-                <ShopOrders key={item.id} item={item} />
-              ))}
-            </tbody>
-          </table>
+          <>
+            <div className="table__search">
+              <div className="table__search-box">
+                <SearchIcon />
+                <input
+                  type="text"
+                  placeholder="Find order"
+                  value={orderSearch}
+                  onChange={(e) => setOrderSearch(e.target.value)}
+                />
+              </div>
+            </div>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Product</th>
+                  <th>Customer</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              {/* in if search everywhere [0] cause all property in orders are ref from products and airtable save it as array */}
+              <tbody>
+                {orders
+                  .filter(
+                    (item) =>
+                      item.name[0].toLowerCase().includes(orderSearch.toLowerCase()) ||
+                      item.userName[0].toLowerCase().includes(orderSearch.toLowerCase())
+                  )
+                  .map((item) => (
+                    <ShopOrders key={item.id} item={item} />
+                  ))}
+              </tbody>
+            </table>
+          </>
         )}
       </section>
     </Layout>
