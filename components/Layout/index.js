@@ -81,17 +81,14 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
             <li className={router.pathname === '/' ? 'active' : ''}>
               <Link href="/">Home</Link>
             </li>
-            <li className={router.pathname === '/product/my' ? 'active' : ''}>
-              <Link href="/product/my">My Products</Link>
+            <li className={router.pathname === '/product/favorite' ? 'active' : ''}>
+              <Link href="/shop">Favorites</Link>
             </li>
             <li className={router.pathname === '/shop' ? 'active' : ''}>
-              <Link href="/shop">My Shop new</Link>
+              <Link href="/shop">My Shop</Link>
             </li>
             <li className={router.pathname === '/orders' ? 'active' : ''}>
               <Link href="/orders">Orders</Link>
-            </li>
-            <li className={router.pathname === '/orders/shop' ? 'active' : ''}>
-              <Link href="/orders/shop">My shop</Link>
             </li>
             <li className={router.pathname === '/premium' ? 'active' : ''}>
               <Link href="/premium">Premium</Link>

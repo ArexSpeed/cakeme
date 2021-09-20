@@ -20,7 +20,7 @@ const ShopProduct = ({ item, highlightQty }) => {
           type: 'SET_ACTION_INFO',
           payload: { active: true, text: `Delete ${item.name} correct` }
         });
-        router.push(`/product/my`);
+        router.push(`/shop`);
       } else {
         const payload = await response.json();
         alert(payload.error?.details[0]?.message);
