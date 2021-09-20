@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
 import styled from 'styled-components';
-import { Home, Favorite, AddBox, LocalMall, PowerSettingsNew } from '@material-ui/icons';
+import { Home, Favorite, AddBox, LocalMall } from '@material-ui/icons';
 import { GlobalContext } from 'context/ContextProvider';
 import BagModal from 'components/BagModal';
 //style - Nav
@@ -63,9 +63,6 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
                 {bagItems.length > 0 && bagQty.reduce((a, b) => a + b)}
               </div>
             </li>
-            <li onClick={signOut} aria-hidden="true">
-              <PowerSettingsNew />
-            </li>
           </ul>
         ) : (
           <ul>
@@ -81,14 +78,17 @@ const Navigation = ({ sidebar, setSidebar, openBag, setOpenBag }) => {
       <div className={sidebar ? 'sidebar open' : 'sidebar'}>
         {session ? (
           <ul>
-            <li className={router.pathname === '/product/my' ? 'active' : ''}>
-              <Link href="/product/my">My Products</Link>
+            <li className={router.pathname === '/' ? 'active' : ''}>
+              <Link href="/">Home</Link>
+            </li>
+            <li className={router.pathname === '/product/favorite' ? 'active' : ''}>
+              <Link href="/shop">Favorites</Link>
+            </li>
+            <li className={router.pathname === '/shop' ? 'active' : ''}>
+              <Link href="/shop">My Shop</Link>
             </li>
             <li className={router.pathname === '/orders' ? 'active' : ''}>
               <Link href="/orders">Orders</Link>
-            </li>
-            <li className={router.pathname === '/orders/shop' ? 'active' : ''}>
-              <Link href="/orders/shop">My shop</Link>
             </li>
             <li className={router.pathname === '/premium' ? 'active' : ''}>
               <Link href="/premium">Premium</Link>

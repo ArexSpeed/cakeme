@@ -3,7 +3,7 @@ import { GlobalContext } from 'context/ContextProvider';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const MyProductItem = ({ item, highlightQty }) => {
+const ShopProduct = ({ item, highlightQty }) => {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const router = useRouter();
@@ -20,7 +20,7 @@ const MyProductItem = ({ item, highlightQty }) => {
           type: 'SET_ACTION_INFO',
           payload: { active: true, text: `Delete ${item.name} correct` }
         });
-        router.push(`/product/my`);
+        router.push(`/shop`);
       } else {
         const payload = await response.json();
         alert(payload.error?.details[0]?.message);
@@ -83,14 +83,22 @@ const MyProductItem = ({ item, highlightQty }) => {
   };
 
   return (
-    <tr style={{ backgroundColor: `${item.highlight === 'true' ? '#DDB086' : ''}` }}>
-      <td>{item.id}</td>
-      <td>
-        <img src={item.imageUrl ? item.imageUrl : ''} alt="" />
+    <tr>
+      <td
+        className={`${item.highlight === 'true' ? 'td__product-id highlight' : 'td__product-id'}`}>
+        {item.id}
       </td>
-      <td>{item.name}</td>
-      <td>{item.price}</td>
-      <td>{item.createdAt.substr(0, 10)}</td>
+      <td>
+        <div className="td__product">
+          <img className="td__product-image" src={item.imageUrl ? item.imageUrl : ''} alt="" />
+          <div className="td__product-info">
+            <div className="td__product-name">{item.name}</div>
+            <div className={`td__product-category ${item.category}`}>{item.category}</div>
+          </div>
+        </div>
+      </td>
+      <td className="td__product-price-total">€{item.price},00</td>
+      <td className="td__product-date">{item.createdAt.substr(0, 10)}</td>
       <td>
         <Link href={`/product/${item.id}/edit`}>
           <button className="edit">Edit</button>
@@ -102,7 +110,7 @@ const MyProductItem = ({ item, highlightQty }) => {
           Delete
         </button>
       </td>
-      <td>
+      <td className="td__product-date">
         {item.highlight === 'false' ? (
           <button className="highlight" onClick={handleHighlight}>
             Highlight
@@ -117,4 +125,4 @@ const MyProductItem = ({ item, highlightQty }) => {
   );
 };
 
-export default MyProductItem;
+export default ShopProduct;

@@ -28,6 +28,7 @@ export default function EditPage({ product }) {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const editForm = useRef();
+  const fileRef = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(product.imageUrl);
@@ -133,16 +134,31 @@ export default function EditPage({ product }) {
                 defaultValue={product?.ingredients}
               />
             </div>
-            <div>
-              <label htmlFor="image">Image:</label>
-              <input type="file" id="image" name="image" onChange={handleImagePreview} />
+            <div className="file-upload">
+              <label htmlFor="image">Image:*</label>
+              <input
+                className="file-upload__input"
+                ref={fileRef}
+                type="file"
+                name="image"
+                id="image"
+                multiple
+                onChange={handleImagePreview}
+              />
+              <button
+                className="file-upload__button"
+                type="button"
+                onClick={() => fileRef.current.click()}>
+                Choose File(s)
+              </button>
+              <span className="file-upload__label"></span>
             </div>
             {imagePreviewUrl && (
               <div>
                 <img src={imagePreviewUrl} alt="" />
               </div>
             )}
-            <button type="submit" disabled={formProcessing}>
+            <button className="button" type="submit" disabled={formProcessing}>
               {formProcessing ? 'Checking...' : 'Accept'}
             </button>
             {error && <div className="form__error">{error}</div>}

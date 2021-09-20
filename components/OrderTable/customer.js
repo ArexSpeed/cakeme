@@ -4,27 +4,24 @@ const OrderCustomer = ({ item }) => {
   return (
     <>
       <tr>
-        <td>{item.id}</td>
+        <td className="td__product-id">{item.id}</td>
         <td>
-          <img
-            src={
-              item.imageUrl
-                ? item.imageUrl
-                : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-            }
-            alt=""
-          />
+          <div className="td__product">
+            <img className="td__product-image" src={item.imageUrl} alt="" />
+            <div className="td__product-info">
+              <div className="td__product-name">{item.name}</div>
+              <div className="td__product-bakery">{item.bakery}</div>
+            </div>
+          </div>
         </td>
-        <td>{item.name}</td>
-        <td>{item.bakery}</td>
-        <td>{item.qty}</td>
-        <td>{item.price}</td>
-        <td>{item.totalPrice}</td>
-        <td>{item.orderDate.substr(0, 10)}</td>
-        <td>{item.status}</td>
-      </tr>
-      <tr>
-        <td colSpan="9">Message: {item.message}</td>
+        <td className="td__product-price">
+          {item.qty} x €{item.price}.00{' '}
+        </td>
+        <td className="td__product-price-total">€{item.totalPrice}.00</td>
+        <td className="td__product-date">{item.orderDate.substr(0, 10)}</td>
+        <td className="td__product-status">
+          <span className="init">{item.status}</span>
+        </td>
       </tr>
     </>
   );

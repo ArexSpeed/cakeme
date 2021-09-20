@@ -1,55 +1,99 @@
 .card {
   display: flex;
   flex-direction: column;
-  width: 260px;
+  min-width: 260px;
   height: 375px;
   margin: 10px;
-  border-radius: 24px;
-  background: $orange3;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   transition: 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  @media screen and (max-width: 640px) {
+    min-width: 208px; // 20% less
+    width: 208px;
+    height: 300px;
+  }
   &:hover {
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.25);
     transition: 0.3s ease-in-out;
-    background: $orange2;
+    transform: scale(1.02);
+  }
+  &.highlight {
+    border: 2px solid $orange1;
   }
   & img {
-    width: 220px;
+    width: 260px;
     height: 200px;
-    margin: 16px auto;
-    border-radius: 16px;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    @media screen and (max-width: 640px) {
+      width: 208px;
+      height: 160px;
+    }
   }
   & h3 {
-    margin: 0 auto;
-    font-size: 20px;
-    color: $blue;
+    margin: 5px;
+    font-size: 16px;
+    color: $textblue;
+    font-weight: bold;
   }
-  &__wrapper{
+  &__wrapper {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
-  &__info {
+  &__product {
+    &-name {
+      margin: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      color: $textblue;
+    }
+    &-bakery {
+      margin: 0 5px;
+      font-size: 14px;
+      font-weight: normal;
+      color: #333;
+      @media screen and (max-width: 620px) {
+        font-size: 12px;
+      }
+    }
+    &-price {
+      margin: 0 5px;
+      font-size: 16px;
+      color: $orange1;
+      @media screen and (max-width: 620px) {
+        font-size: 12px;
+      }
+    }
+  }
+  &__rank {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin: 0 5px;
-    & h4 {
+    &-score {
+      margin-right: 5px;
       font-size: 14px;
-      color: $blue;
-      font-weight: 500;
-      max-width: 100px;
-      flex-wrap: wrap;
-      &:nth-child(1) {
-        align-self: flex-start;
+      color: $orange1;
+      @media screen and (max-width: 620px) {
+        font-size: 12px;
       }
-      &:nth-child(2) {
-        align-self: flex-end;
+    }
+    &-star {
+      color: $orange2;
+      width: 16px;
+      height: 16px;
+      @media screen and (max-width: 620px) {
+        width: 12px;
+        height: 12px;
       }
     }
   }
@@ -75,9 +119,71 @@
         transition: all 0.3s ease-in-out;
       }
       &.favorite {
-        color: $orange1; 
+        color: $orange1;
       }
     }
   }
-  
+
+  &__payment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    height: 70px;
+    margin: 8px auto;
+    padding: 0 8px;
+    background: $orange3;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: $orange1;
+      transition: all 0.5s;
+      border-radius: inherit;
+      z-index: -1;
+    }
+    &:hover {
+      transform: scale(1.02);
+      transition: all 0.25s ease-in-out;
+      color: #ffffff;
+      &::after {
+        width: 100%;
+      }
+    }
+    &-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+      &.qty {
+        background: $orange1;
+        margin-left: -8px;
+        padding: 0 20px 0 8px;
+        border-radius: 0 10px 20px 0;
+      }
+    }
+    &-button {
+      background: $green1;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  }
 }

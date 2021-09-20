@@ -1,0 +1,27 @@
+.price__section {
+  display: flex;
+  max-width: 900px;
+  margin: 20px auto;
+  justify-content: flex-start;
+  align-items: center;
+}
+.priceBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50px;
+  width: 200px;
+  margin: auto 5px;
+  &__title {
+    align-self: flex-start;
+    margin: -5px 2px;
+    font-size: 14px;
+    font-weight: normal;
+  }
+  &__range {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+}

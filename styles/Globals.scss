@@ -6,7 +6,7 @@ body {
   font-family: 'Poppins', sans-serif;
   max-width: 100vw;
   min-height: 100vh;
-  background: #eceae7;
+  background: #ffffff;
   overflow-x: hidden;
 }
 
@@ -33,6 +33,38 @@ a {
   margin: auto;
   justify-content: center;
   align-items: center;
+  &__name {
+    width: 100%;
+    margin: 10px auto;
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    background: $orange3;
+    padding: 5px 10px;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 100%;
+      clip-path: polygon(0 0, 0 100%, 100% 0);
+      background: $orange1;
+    }
+    & span {
+      margin-left: 30px;
+    }
+  }
+  &__highlight {
+    font-size: 24px;
+    font-weight: bold;
+    background: $orange3;
+    color: #ffffff;
+    text-shadow: 0 0 4px rgba(0,0,0,.5);
+    padding: 4px;
+    border: 2px solid $orange1;
+    border-radius: 4px;
+  }
 }
 
 footer {
