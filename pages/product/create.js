@@ -54,14 +54,11 @@ export default function ProductCreate() {
     };
 
     if (form.get('image1')) {
-      console.log('image1');
       const picture = form.get('image1');
-      console.log(picture, 'picture');
       const file = await uploadImage(picture);
       payload.imageFirstUrl = file.secure_url;
     }
     if (form.get('image2')) {
-      console.log('image2');
       const picture = form.get('image2');
       const file = await uploadImage(picture);
       payload.imageSecondUrl = file.secure_url;
@@ -125,7 +122,7 @@ export default function ProductCreate() {
             <textarea id="description" name="description" required />
           </div>
           <div>
-            <label htmlFor="price">Price:</label>
+            <label htmlFor="price">Price:(€)</label>
             <input type="number" id="price" name="price" placeholder="100" required />
           </div>
           <div>
@@ -273,21 +270,6 @@ export default function ProductCreate() {
             </div>
             {/* End image */}
           </div>
-          {/* <div className="form__images">
-            <img src={imagePreview.first} alt="" />
-          </div> */}
-          {/* {imagePreviewIndex !== null && (
-            <div className="form__images">
-              <img src={imagePreviewUrl[imagePreviewIndex]} alt="" />
-              <div className="product__images-small">
-                {imagePreviewUrl.map((item, i) => (
-                  <button key={i} onClick={() => setImagePreviewIndex(i)} type="button">
-                    <img src={item} alt="img" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          )} */}
           <button className="form__submit" type="submit" disabled={formProcessing}>
             {formProcessing ? 'Checking...' : 'Add'}
           </button>

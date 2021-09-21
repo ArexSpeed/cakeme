@@ -38,10 +38,13 @@ export default function ProductPage({ product, bakeryProducts }) {
   const [like, setLike] = useState(false);
   const [liked, setLiked] = useState([]); //all favorite product id for user
   const [ingredients, setIngredients] = useState();
+  const [imageIndex, setImageIndex] = useState(0);
+  const [showImage, setShowImage] = useState([]);
 
   useEffect(() => {
     if (product) {
       setIngredients(product.ingredients);
+      setShowImage([product?.imageFirstUrl, product?.imageSecondUrl, product?.imageThirdUrl]);
     }
   }, [product]);
 
@@ -135,44 +138,16 @@ export default function ProductPage({ product, bakeryProducts }) {
           </div>
           <article className="product__container">
             <div className="product__images">
-              <img
-                src={
-                  product?.imageFirstUrl
-                    ? product?.imageFirstUrl
-                    : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                }
-                alt=""
-              />
+              <img src={showImage[imageIndex]} alt="" />
               <div className="product__images-small">
-                <button>
-                  <img
-                    src={
-                      product?.imageFirstUrl
-                        ? product?.imageFirstUrl
-                        : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                    }
-                    alt=""
-                  />
+                <button onClick={() => setImageIndex(0)}>
+                  <img src={product?.imageFirstUrl ? product?.imageFirstUrl : ''} alt="" />
                 </button>
-                <button>
-                  <img
-                    src={
-                      product?.imageSecondUrl
-                        ? product?.imageSecondUrl
-                        : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                    }
-                    alt=""
-                  />
+                <button onClick={() => setImageIndex(1)}>
+                  <img src={product?.imageSecondUrl ? product?.imageSecondUrl : ''} alt="" />
                 </button>
-                <button>
-                  <img
-                    src={
-                      product?.imageThirdUrl
-                        ? product?.imageThirdUrl
-                        : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                    }
-                    alt=""
-                  />
+                <button onClick={() => setImageIndex(2)}>
+                  <img src={product?.imageThirdUrl ? product?.imageThirdUrl : ''} alt="" />
                 </button>
               </div>
             </div>
