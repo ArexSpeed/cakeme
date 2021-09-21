@@ -90,14 +90,18 @@ const ShopProduct = ({ item, highlightQty }) => {
       </td>
       <td>
         <div className="td__product">
-          <img className="td__product-image" src={item.imageUrl ? item.imageUrl : ''} alt="" />
+          <img
+            className="td__product-image"
+            src={item.imageFirstUrl ? item.imageFirstUrl : ''}
+            alt=""
+          />
           <div className="td__product-info">
             <div className="td__product-name">{item.name}</div>
             <div className={`td__product-category ${item.category}`}>{item.category}</div>
           </div>
         </div>
       </td>
-      <td className="td__product-price-total">€{item.price},00</td>
+      <td className="td__product-price-total">€{item.price.toFixed(2)}</td>
       <td className="td__product-date">{item.createdAt.substr(0, 10)}</td>
       <td>
         <Link href={`/product/${item.id}/edit`}>

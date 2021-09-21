@@ -9,11 +9,16 @@ export default function ProductCreate() {
   // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const createForm = useRef();
-  const fileRef = useRef();
+  const image1Ref = useRef();
+  const image2Ref = useRef();
+  const image3Ref = useRef();
   const [error, setError] = useState();
   const [formProcessing, setFormProcessing] = useState(false);
-  const [imagePreviewIndex, setImagePreviewIndex] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState([]);
+  const [imagePreview, setImagePreview] = useState({
+    first: '',
+    second: '',
+    third: ''
+  });
   const router = useRouter();
   const [session, loading] = useSession();
 
@@ -23,18 +28,13 @@ export default function ProductCreate() {
     }
   }, [session, loading]);
 
-  //temp wyswietlanie image
-  const handleImagePreview = (e) => {
-    console.log(e.target.files, 'all files');
-    const files = Array.from(e.target.files);
-    const urls = files.map((file) => window.URL.createObjectURL(file));
-    const oneurl = window.URL.createObjectURL(e.target.files[0]);
-    setImagePreviewUrl(urls);
-    setImagePreviewIndex(0);
-    console.log(files, 'files');
-    console.log(urls, 'urls');
-    console.log(oneurl, 'one url');
-    console.log(imagePreviewUrl, 'preview');
+  const handleImagePreview = (e, number) => {
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    setImagePreview({ ...imagePreview, [number]: url });
+  };
+
+  const deleteFromPreview = (number) => {
+    setImagePreview({ ...imagePreview, [number]: '' });
   };
 
   const handleSubmit = async (e) => {
@@ -49,26 +49,24 @@ export default function ProductCreate() {
       price: form.get('price'),
       description: form.get('description'),
       ingredients: form.get('ingredients'),
-      location: form.get('location')
+      location: form.get('location'),
+      score: 5
     };
 
-    if (form.get('image')) {
-      const picture = form.get('image');
+    if (form.get('image1')) {
+      const picture = form.get('image1');
       const file = await uploadImage(picture);
-      payload.imageUrl = file.secure_url;
+      payload.imageFirstUrl = file.secure_url;
     }
-
-    if (!payload.imageUrl) {
-      payload.imageUrl =
-        payload.category === 'Cookies'
-          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621685454/zumsucm6bpzihfxysxut.png'
-          : payload.category === 'Cakes'
-          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621683749/jhsptiqv4ejfp5i3oq2h.png'
-          : payload.category === 'Breads'
-          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621685356/xct3ve9xt1tckoaglq8g.png'
-          : payload.category === 'Donuts'
-          ? 'https://res.cloudinary.com/dbpsxmtcb/image/upload/v1621685424/d648xaav7joomyviafji.jpg'
-          : '';
+    if (form.get('image2')) {
+      const picture = form.get('image2');
+      const file = await uploadImage(picture);
+      payload.imageSecondUrl = file.secure_url;
+    }
+    if (form.get('image3')) {
+      const picture = form.get('image3');
+      const file = await uploadImage(picture);
+      payload.imageThirdUrl = file.secure_url;
     }
 
     const response = await fetch('/api/products', {
@@ -84,7 +82,7 @@ export default function ProductCreate() {
         type: 'SET_ACTION_INFO',
         payload: { active: true, text: `You added ${payload.name}` }
       });
-      router.push('/product/my');
+      router.push('/shop');
     } else {
       const payload = await response.json();
       setFormProcessing(false);
@@ -124,8 +122,8 @@ export default function ProductCreate() {
             <textarea id="description" name="description" required />
           </div>
           <div>
-            <label htmlFor="price">Price:</label>
-            <input type="number" id="price" name="price" placeholder="100,00" required />
+            <label htmlFor="price">Price:(€)</label>
+            <input type="number" id="price" name="price" placeholder="100" required />
           </div>
           <div>
             <label htmlFor="location">Location:</label>
@@ -140,38 +138,138 @@ export default function ProductCreate() {
               placeholder="chocolate, strawberry"
             />
           </div>
-          <div className="file-upload">
-            <label htmlFor="image">Image:*</label>
-            <input
-              className="file-upload__input"
-              ref={fileRef}
-              type="file"
-              name="image"
-              id="image"
-              multiple
-              onChange={handleImagePreview}
-            />
-            <button
-              className="file-upload__button"
-              type="button"
-              onClick={() => fileRef.current.click()}>
-              Choose File(s)
-            </button>
-            <span className="file-upload__label"></span>
+          <div>
+            <label htmlFor="image">Images:</label>
           </div>
-          <div className="form__ps">*max 5 files, first is main</div>
-          {imagePreviewIndex !== null && (
-            <div className="form__images">
-              <img src={imagePreviewUrl[imagePreviewIndex]} alt="" />
-              <div className="product__images-small">
-                {imagePreviewUrl.map((item, i) => (
-                  <button key={i} onClick={() => setImagePreviewIndex(i)} type="button">
-                    <img src={item} alt="img" />
+          <div className="file-upload">
+            {/* First image */}
+            <div>
+              <input
+                className="file-upload__input"
+                ref={image1Ref}
+                type="file"
+                name="image1"
+                id="image1"
+                onChange={(e) => handleImagePreview(e, 'first')}
+              />
+              <button
+                className={
+                  imagePreview.first === '' ? 'file-upload__button' : 'file-upload__button-hidden'
+                }
+                type="button"
+                onClick={() => image1Ref.current.click()}>
+                +
+              </button>
+              {imagePreview.first !== '' && (
+                <div className="file-upload__imageBox">
+                  <img className="file-upload__image" src={imagePreview.first} alt="" />
+                  <button
+                    className="file-upload__delete"
+                    type="button"
+                    onClick={() => deleteFromPreview('first')}>
+                    <svg
+                      className="file-upload__delete-icon"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
                   </button>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          )}
+            {/* Second image */}
+            <div>
+              <input
+                className="file-upload__input"
+                ref={image2Ref}
+                type="file"
+                name="image2"
+                id="image2"
+                onChange={(e) => handleImagePreview(e, 'second')}
+              />
+              <button
+                className={
+                  imagePreview.second === '' ? 'file-upload__button' : 'file-upload__button-hidden'
+                }
+                type="button"
+                onClick={() => image2Ref.current.click()}>
+                +
+              </button>
+              {imagePreview.second !== '' && (
+                <div className="file-upload__imageBox">
+                  <img className="file-upload__image" src={imagePreview.second} alt="" />
+                  <button
+                    className="file-upload__delete"
+                    type="button"
+                    onClick={() => deleteFromPreview('second')}>
+                    <svg
+                      className="file-upload__delete-icon"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
+            {/* Third image */}
+            <div>
+              <input
+                className="file-upload__input"
+                ref={image3Ref}
+                type="file"
+                name="image3"
+                id="image3"
+                onChange={(e) => handleImagePreview(e, 'third')}
+              />
+              <button
+                className={
+                  imagePreview.third === '' ? 'file-upload__button' : 'file-upload__button-hidden'
+                }
+                type="button"
+                onClick={() => image3Ref.current.click()}>
+                +
+              </button>
+              {imagePreview.third !== '' && (
+                <div className="file-upload__imageBox">
+                  <img className="file-upload__image" src={imagePreview.third} alt="" />
+                  <button
+                    className="file-upload__delete"
+                    type="button"
+                    onClick={() => deleteFromPreview('third')}>
+                    <svg
+                      className="file-upload__delete-icon"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
+            {/* End image */}
+          </div>
           <button className="form__submit" type="submit" disabled={formProcessing}>
             {formProcessing ? 'Checking...' : 'Add'}
           </button>

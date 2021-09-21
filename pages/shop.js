@@ -38,7 +38,6 @@ const ShopPage = ({ products, userHighlights, orders }) => {
   const [currentTab, setCurrentTab] = useState('products');
   const [productSearch, setProductSearch] = useState('');
   const [orderSearch, setOrderSearch] = useState('');
-  console.log(orders, 'orders');
 
   return (
     <Layout>

@@ -58,12 +58,12 @@ const CardItem = ({ product }) => {
     <div className={`${product.highlight === 'true' ? 'card highlight' : 'card'}`}>
       <Link href={`/product/${product.id}`}>
         <div className="card__wrapper">
-          <img src={product.imageUrl ? product.imageUrl : ''} alt="" />
+          <img src={product.imageFirstUrl ? product.imageFirstUrl : ''} alt="" />
           <p className="card__product-name">{product.name}</p>
           <p className="card__product-bakery">{product.bakery[0]}</p>
-          <p className="card__product-price">€{product.price},00</p>
+          <p className="card__product-price">€{product.price.toFixed(2)}</p>
           <div className="card__rank">
-            <span className="card__rank-score">5,0</span>
+            <span className="card__rank-score">{product?.score}</span>
             <svg
               className="card__rank-star"
               fill="currentColor"

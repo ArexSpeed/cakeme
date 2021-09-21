@@ -38,7 +38,7 @@ export default function Home({ products }) {
       <>
         <Hero>
           <p className="hero__title">
-            Find your perfect cake for your party. A lot of choose from 1000 products.
+            Find your perfect cake for your party. A lot of choose from the best bakers.
           </p>
           <Search />
         </Hero>

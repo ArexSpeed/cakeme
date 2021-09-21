@@ -1,11 +1,11 @@
 import Layout from 'components/Layout';
-//import ProductSite from 'components/ProductSite';
 import { getProduct, getProducts, getBakeryProducts } from 'services/products/getProduct';
 import { useEffect, useState } from 'react';
 import CardItem from 'components/CardItem';
 import { Favorite } from '@material-ui/icons';
 import { useSession } from 'next-auth/client';
 import AddToCartButton from 'components/AddToCartButton';
+import Stars from 'components/Stars';
 
 export const getStaticPaths = async () => {
   const products = await getProducts();
@@ -38,10 +38,13 @@ export default function ProductPage({ product, bakeryProducts }) {
   const [like, setLike] = useState(false);
   const [liked, setLiked] = useState([]); //all favorite product id for user
   const [ingredients, setIngredients] = useState();
+  const [imageIndex, setImageIndex] = useState(0);
+  const [showImage, setShowImage] = useState([]);
 
   useEffect(() => {
     if (product) {
       setIngredients(product.ingredients);
+      setShowImage([product?.imageFirstUrl, product?.imageSecondUrl, product?.imageThirdUrl]);
     }
   }, [product]);
 
@@ -118,72 +121,24 @@ export default function ProductPage({ product, bakeryProducts }) {
           </div>
           <article className="product__container">
             <div className="product__images">
-              <img
-                src={
-                  product?.imageUrl
-                    ? product?.imageUrl
-                    : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                }
-                alt=""
-              />
+              <img src={showImage[imageIndex]} alt="" />
               <div className="product__images-small">
-                <button>
-                  <img
-                    src={
-                      product?.imageUrl
-                        ? product?.imageUrl
-                        : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                    }
-                    alt=""
-                  />
+                <button onClick={() => setImageIndex(0)}>
+                  <img src={product?.imageFirstUrl ? product?.imageFirstUrl : ''} alt="" />
                 </button>
-                <button>
-                  <img
-                    src={
-                      product?.imageUrl
-                        ? product?.imageUrl
-                        : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                    }
-                    alt=""
-                  />
+                <button onClick={() => setImageIndex(1)}>
+                  <img src={product?.imageSecondUrl ? product?.imageSecondUrl : ''} alt="" />
                 </button>
-                <button>
-                  <img
-                    src={
-                      product?.imageUrl
-                        ? product?.imageUrl
-                        : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-                    }
-                    alt=""
-                  />
+                <button onClick={() => setImageIndex(2)}>
+                  <img src={product?.imageThirdUrl ? product?.imageThirdUrl : ''} alt="" />
                 </button>
               </div>
             </div>
             <div className="product__info">
               <div className="product__price">€{product?.price},00</div>
               <div className="product__rank">
-                <span className="product__rank-score">5,00</span>
-                <svg
-                  className="product__rank-star"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                <svg
-                  className="product__rank-star"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                <svg
-                  className="product__rank-star"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+                <span className="product__rank-score">{product?.score.toFixed(2)}</span>
+                <Stars qty={product?.score} />
               </div>
               <div className="product__description">{product?.description}</div>
               <div>

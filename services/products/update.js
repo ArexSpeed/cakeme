@@ -8,7 +8,9 @@ const schema = Joi.object({
   price: Joi.number().greater(0).required(),
   ingredients: Joi.string().required(),
   location: Joi.string().required(),
-  imageUrl: Joi.string()
+  imageFirstUrl: Joi.string(),
+  imageSecondUrl: Joi.string(),
+  imageThirdUrl: Joi.string()
 });
 
 const update = async (airtableId, payload) => {

@@ -117,6 +117,11 @@
   &__images {
     display: flex;
     flex-direction: column !important;
+    & img {
+      width: 200px;
+      height: 200px;
+      border-radius: 4px;
+    }
   }
 }
 
@@ -135,33 +140,61 @@
 }
 
 .file-upload {
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin-top: 5px;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  &__input {
+    display: none;
+  }
+  &__button {
+    -webkit-appearance: none;
+    background: $orange1;
+    width: 200px;
+    height: 200px;
+    background: #ffffff;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    margin: 4px;
+    color: #000000;
+    font-size: 52px;
+    font-family: $fontFamily;
+    font-weight: bold;
+    cursor: pointer;
+    &-hidden {
+      display: none;
+    }
+  }
+  &__imageBox{
+    width: 200px !important;
+    height: 200px !important;
+    border-radius: 4px;
+    margin: 4px;
+    position: relative;
+  }
+  &__image {
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+  }
+  &__delete {
+    position: absolute;
+    top: -10px;
+    right: -12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    &-icon {
+      width: 20px;
+      height: 20px;
+      color: $red1;
+    }
+  }
 }
-
-.file-upload__input {
-  display: none;
-}
-
-.file-upload__button {
-  -webkit-appearance: none;
-  background: $orange1;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  padding: 4px 16px;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: $fontFamily;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-// .file-upload__label {
-//   max-width: 250px;
-//   font-size: 0.95em;
-//   text-overflow: ellipsis;
-//   overflow: hidden;
-//   white-space: nowrap;
-//   font-family: 'Ubuntu', sans-serif;
-// }
