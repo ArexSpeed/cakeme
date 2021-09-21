@@ -1,5 +1,3 @@
-import React from 'react';
-
 const OrderCustomer = ({ item }) => {
   return (
     <>
@@ -7,7 +5,7 @@ const OrderCustomer = ({ item }) => {
         <td className="td__product-id">{item.id}</td>
         <td>
           <div className="td__product">
-            <img className="td__product-image" src={item.imageUrl} alt="" />
+            <img className="td__product-image" src={item.imageFirstUrl} alt="" />
             <div className="td__product-info">
               <div className="td__product-name">{item.name}</div>
               <div className="td__product-bakery">{item.bakery}</div>

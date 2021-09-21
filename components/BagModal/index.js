@@ -15,11 +15,7 @@ const BagModal = ({ open, setOpen }) => {
       <div className="bagModal__item" key={index}>
         <img
           className="bagModal__image"
-          src={
-            item.imageUrl
-              ? item.imageUrl
-              : 'https://www.przyslijprzepis.pl/media/cache/big/uploads/media/recipe/0007/27/domowy-drip-cake_1.jpeg'
-          }
+          src={item.imageFirstUrl ? item.imageFirstUrl : ''}
           alt=""
         />
         <div className="bagModal__details">
