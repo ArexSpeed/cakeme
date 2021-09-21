@@ -29,11 +29,51 @@ export const getServerSideProps = async ({ req }) => {
   };
 };
 
+const CheckIcon = () => (
+  <svg
+    className="premium__table-icon"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
+
 const PremiumSite = ({ highlightsOffers, userHighlights, userPayments }) => {
   return (
     <Layout>
       <section className="section">
-        Buy highlights for your products and get higher on the search engine!
+        <div className="premium__table">
+          <h2 className="premium__table-title">What does highlight products get you?</h2>
+          <span className="premium__table-span">
+            <CheckIcon />
+            better search experiences
+          </span>
+          <span className="premium__table-span">
+            <CheckIcon /> higher on products list
+          </span>
+          <span className="premium__table-span">
+            <CheckIcon /> get more clients
+          </span>
+          <span className="premium__table-span">
+            <CheckIcon /> more products recomendation
+          </span>
+          <span className="premium__table-span">
+            <CheckIcon /> promotion mode
+          </span>
+          <span className="premium__table-span">
+            <CheckIcon /> product highlight for 30 days
+          </span>
+          <h3 className="premium__table-subtitle">
+            Select one of highlight tickets and improve your sales
+          </h3>
+        </div>
       </section>
       <section className="section">
         <p>
@@ -44,10 +84,10 @@ const PremiumSite = ({ highlightsOffers, userHighlights, userPayments }) => {
         {highlightsOffers.map((offer, i) => (
           <PremiumCard key={i} item={offer} highlightQty={userHighlights} />
         ))}
-        <h5>
+        <span style={{ fontSize: '12px' }}>
           *It is currently a test payment, it will not take your money, if you want to check this
           payment fill a random data and a card number 4242 4242 4242 4242
-        </h5>
+        </span>
       </section>
       <section className="section">
         <h2>All my payments</h2>

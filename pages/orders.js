@@ -7,6 +7,7 @@ import { GlobalContext } from 'context/ContextProvider';
 import { actionTypes } from 'context/reducer';
 import Layout from 'components/Layout';
 import OrderCustomer from 'components/OrderTable/customer';
+import OrderShop from 'components/OrderTable/shop';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -66,44 +67,6 @@ const Orders = ({ orders }) => {
     });
   };
 
-  const showItems = bagItems.map((item, i) => (
-    <tr key={item.id}>
-      <td className="td__product-id">{i + 1}</td>
-      <td>
-        <div className="td__product">
-          <img className="td__product-image" src={item.imageUrl} alt="" />
-          <div className="td__product-info">
-            <div className="td__product-name">{item.name}</div>
-            <div className="td__product-bakery">{item.bakery}</div>
-          </div>
-        </div>
-      </td>
-      <td className="td__product-price">€{item.price}.00 </td>
-      <td>
-        <div className="td__product-qty">
-          <button
-            className="minus"
-            onClick={() => {
-              if (item.qty === 1) {
-                dispatch({ type: actionTypes.DELETE_BAG_ITEM, payload: item.id });
-              } else {
-                dispatch({ type: actionTypes.MINUS_ITEM_TO_BAG, payload: item.id });
-              }
-            }}>
-            -
-          </button>
-          <span>{item.qty}</span>
-          <button
-            className="plus"
-            onClick={() => dispatch({ type: actionTypes.PLUS_ITEM_TO_BAG, payload: item.id })}>
-            +
-          </button>
-        </div>
-      </td>
-      <td className="td__product-price-total">€{item.price * item.qty}.00</td>
-    </tr>
-  ));
-
   return (
     <Layout>
       <section className="section">
@@ -140,7 +103,9 @@ const Orders = ({ orders }) => {
               </thead>
               {bagItems.length > 0 ? (
                 <tbody>
-                  {showItems}
+                  {bagItems.map((item, i) => (
+                    <OrderShop key={item.id} item={item} idx={i + 1} />
+                  ))}
                   <tr>
                     <td colSpan="3" className="table__emptyCell"></td>
                     <td>Total</td>

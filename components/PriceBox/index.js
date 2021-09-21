@@ -27,6 +27,7 @@ const PriceSlider = withStyles({
 })(Slider);
 
 const PriceBox = () => {
+  // eslint-disable-next-line no-empty-pattern
   const [{}, dispatch] = useContext(GlobalContext);
   const [priceValue, setPriceValue] = useState([0, 300]);
 
