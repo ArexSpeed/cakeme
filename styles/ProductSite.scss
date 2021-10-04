@@ -165,6 +165,17 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    overflow: scroll;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $orange1;
+      border-radius: 10px;
+    }
   }
 }
